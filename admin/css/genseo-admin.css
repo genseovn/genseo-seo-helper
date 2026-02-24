@@ -1,0 +1,173 @@
+/**
+ * GenSeo SEO Helper - Admin Styles
+ *
+ * @package GenSeo_SEO_Helper
+ * @since 1.0.0
+ */
+
+/* ============================================
+   Status Box
+   ============================================ */
+
+.genseo-status-box {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-left: 4px solid #00B87A;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.genseo-status-box h3 {
+    margin: 0 0 15px 0;
+    padding: 0;
+    font-size: 14px;
+    color: #1d2327;
+}
+
+.genseo-status-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.genseo-status-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f1;
+    vertical-align: top;
+}
+
+.genseo-status-table tr:last-child td {
+    border-bottom: none;
+}
+
+.genseo-status-table td:first-child {
+    width: 200px;
+    color: #646970;
+}
+
+.genseo-status-ok {
+    color: #00a32a;
+}
+
+.genseo-status-warn {
+    color: #dba617;
+}
+
+.genseo-status-error {
+    color: #d63638;
+}
+
+/* ============================================
+   Admin Header
+   ============================================ */
+
+.genseo-admin-header {
+    margin-bottom: 20px;
+}
+
+.genseo-admin-header .description {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ============================================
+   Image Field
+   ============================================ */
+
+.genseo-image-field {
+    margin-bottom: 10px;
+}
+
+.genseo-image-preview {
+    margin-bottom: 10px;
+}
+
+.genseo-image-preview img {
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 4px;
+    background: #fff;
+}
+
+.genseo-upload-button,
+.genseo-remove-button {
+    margin-right: 8px !important;
+}
+
+/* ============================================
+   Meta Box
+   ============================================ */
+
+.genseo-meta-box {
+    font-size: 13px;
+}
+
+.genseo-meta-box p {
+    margin: 0 0 12px 0;
+}
+
+.genseo-meta-box p:last-child {
+    margin-bottom: 0;
+}
+
+.genseo-meta-box code {
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.genseo-seo-title,
+.genseo-meta-desc {
+    display: block;
+    padding: 8px;
+    background: #f9f9f9;
+    border-left: 3px solid #00B87A;
+    margin: 5px 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.genseo-seo-title {
+    color: #1a0dab;
+    font-weight: 500;
+}
+
+.genseo-meta-desc {
+    color: #545454;
+}
+
+/* ============================================
+   Settings Form
+   ============================================ */
+
+.form-table th {
+    width: 220px;
+}
+
+.form-table .description {
+    font-style: normal;
+    color: #646970;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media screen and (max-width: 782px) {
+    .genseo-status-table td:first-child {
+        width: auto;
+        display: block;
+        padding-bottom: 4px;
+        font-weight: 600;
+    }
+    
+    .genseo-status-table td:last-child {
+        display: block;
+        padding-top: 0;
+    }
+    
+    .form-table th {
+        width: auto;
+    }
+}

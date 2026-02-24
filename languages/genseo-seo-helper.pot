@@ -1,0 +1,10 @@
+<?php
+/**
+ * Translation template file
+ *
+ * @package GenSeo_SEO_Helper
+ * @since 1.0.0
+ */
+
+// This file is generated automatically by tools like WP-CLI or Poedit
+// Run: wp i18n make-pot . languages/genseo-seo-helper.pot --domain=genseo-seo-helper
