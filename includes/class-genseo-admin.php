@@ -241,6 +241,15 @@ class GenSeo_Admin {
         $sanitized['twitter_username']   = sanitize_text_field($input['twitter_username'] ?? '');
         $sanitized['schema_type_default'] = sanitize_text_field($input['schema_type_default'] ?? 'Article');
 
+        // Preserve API Key fields (managed separately, not through the form)
+        $current = get_option('genseo_settings', array());
+        if (!empty($current['api_key'])) {
+            $sanitized['api_key'] = $current['api_key'];
+        }
+        if (!empty($current['api_key_user_id'])) {
+            $sanitized['api_key_user_id'] = $current['api_key_user_id'];
+        }
+
         return $sanitized;
     }
 
@@ -252,12 +261,45 @@ class GenSeo_Admin {
             return;
         }
 
+        // Xác định tab hiện tại
+        $current_tab = isset($_GET['tab']) ? sanitize_key($_GET['tab']) : 'settings';
+
         // Hiển thị thông báo lưu thành công
         settings_errors('genseo_settings');
 
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+
+            <nav class="nav-tab-wrapper">
+                <a href="<?php echo esc_url(admin_url('options-general.php?page=genseo-settings&tab=settings')); ?>"
+                   class="nav-tab <?php echo $current_tab === 'settings' ? 'nav-tab-active' : ''; ?>">
+                    <span class="dashicons dashicons-admin-generic" style="vertical-align: middle; margin-right: 3px;"></span>
+                    <?php esc_html_e('Cài đặt', 'genseo-seo-helper'); ?>
+                </a>
+                <a href="<?php echo esc_url(admin_url('options-general.php?page=genseo-settings&tab=diagnostics')); ?>"
+                   class="nav-tab <?php echo $current_tab === 'diagnostics' ? 'nav-tab-active' : ''; ?>">
+                    <span class="dashicons dashicons-heart" style="vertical-align: middle; margin-right: 3px;"></span>
+                    <?php esc_html_e('Chẩn đoán', 'genseo-seo-helper'); ?>
+                </a>
+            </nav>
+
+            <?php
+            if ($current_tab === 'diagnostics') {
+                GenSeo_Diagnostic::render_tab_content();
+            } else {
+                self::render_settings_tab();
+            }
+            ?>
+        </div>
+        <?php
+    }
+
+    /**
+     * Render nội dung tab Cài đặt
+     */
+    private static function render_settings_tab() {
+        ?>
 
             <div class="genseo-admin-header">
                 <p class="description">
@@ -269,6 +311,8 @@ class GenSeo_Admin {
 
             <?php self::render_status_box(); ?>
 
+            <?php self::render_api_key_box(); ?>
+
             <form method="post" action="options.php">
                 <?php
                 settings_fields('genseo_settings_group');
@@ -276,7 +320,6 @@ class GenSeo_Admin {
                 submit_button(__('Lưu cài đặt', 'genseo-seo-helper'));
                 ?>
             </form>
-        </div>
         <?php
     }
 
@@ -313,6 +356,121 @@ class GenSeo_Admin {
                 </tr>
             </table>
         </div>
+        <?php
+    }
+
+    /**
+     * Render API Key box
+     */
+    private static function render_api_key_box() {
+        $api_key = GenSeo_API_Key_Auth::get_key();
+        $ajax_url = admin_url('admin-ajax.php');
+        $nonce = wp_create_nonce('genseo_regenerate_api_key');
+
+        ?>
+        <div class="genseo-status-box" style="margin-top: 15px;">
+            <h3><?php _e('API Key (Kết nối qua Firewall)', 'genseo-seo-helper'); ?></h3>
+            <p class="description">
+                <?php _e('Nếu trang web bị tường lửa (Imunify360, ModSecurity) chặn kết nối, hãy dùng API Key thay cho Application Password.', 'genseo-seo-helper'); ?>
+                <br>
+                <?php _e('Copy key này và dán vào GenSeo Desktop khi thêm trang WordPress.', 'genseo-seo-helper'); ?>
+            </p>
+
+            <table class="genseo-status-table" style="margin-top: 10px;">
+                <tr>
+                    <td style="width: 120px;"><?php _e('API Key:', 'genseo-seo-helper'); ?></td>
+                    <td>
+                        <input type="text" id="genseo-api-key-display" value="<?php echo esc_attr($api_key); ?>"
+                               readonly style="width: 420px; font-family: monospace; font-size: 12px;" />
+                        <button type="button" class="button" id="genseo-copy-api-key">
+                            <?php _e('Copy', 'genseo-seo-helper'); ?>
+                        </button>
+                        <button type="button" class="button" id="genseo-regenerate-api-key" style="margin-left: 5px;">
+                            <?php _e('Tạo key mới', 'genseo-seo-helper'); ?>
+                        </button>
+                        <span id="genseo-key-status" style="margin-left: 8px; color: green; display: none;"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php _e('AJAX URL:', 'genseo-seo-helper'); ?></td>
+                    <td>
+                        <code id="genseo-ajax-url"><?php echo esc_url($ajax_url); ?></code>
+                        <button type="button" class="button" id="genseo-copy-ajax-url">
+                            <?php _e('Copy', 'genseo-seo-helper'); ?>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+        (function() {
+            // Copy API Key
+            document.getElementById('genseo-copy-api-key').addEventListener('click', function() {
+                var input = document.getElementById('genseo-api-key-display');
+                input.select();
+                document.execCommand('copy');
+                var status = document.getElementById('genseo-key-status');
+                status.textContent = 'Đã copy!';
+                status.style.display = 'inline';
+                setTimeout(function() { status.style.display = 'none'; }, 2000);
+            });
+
+            // Copy AJAX URL
+            document.getElementById('genseo-copy-ajax-url').addEventListener('click', function() {
+                var url = document.getElementById('genseo-ajax-url').textContent;
+                var tmp = document.createElement('textarea');
+                tmp.value = url;
+                document.body.appendChild(tmp);
+                tmp.select();
+                document.execCommand('copy');
+                document.body.removeChild(tmp);
+                var status = document.getElementById('genseo-key-status');
+                status.textContent = 'Đã copy URL!';
+                status.style.display = 'inline';
+                setTimeout(function() { status.style.display = 'none'; }, 2000);
+            });
+
+            // Regenerate Key
+            document.getElementById('genseo-regenerate-api-key').addEventListener('click', function() {
+                if (!confirm('Tạo key mới sẽ làm key cũ mất hiệu lực. Bạn cần cập nhật key mới trong GenSeo Desktop. Tiếp tục?')) {
+                    return;
+                }
+                var btn = this;
+                btn.disabled = true;
+                btn.textContent = 'Đang tạo...';
+
+                var formData = new FormData();
+                formData.append('action', 'genseo_regenerate_api_key');
+                formData.append('_wpnonce', '<?php echo esc_js($nonce); ?>');
+
+                fetch('<?php echo esc_url($ajax_url); ?>', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(function(response) { return response.json(); })
+                .then(function(result) {
+                    if (result.success) {
+                        document.getElementById('genseo-api-key-display').value = result.data.api_key;
+                        var status = document.getElementById('genseo-key-status');
+                        status.textContent = 'Đã tạo key mới!';
+                        status.style.display = 'inline';
+                        setTimeout(function() { status.style.display = 'none'; }, 3000);
+                    } else {
+                        alert('Lỗi: ' + (result.data?.message || 'Không thể tạo key mới'));
+                    }
+                })
+                .catch(function(err) {
+                    alert('Lỗi: ' + err.message);
+                })
+                .finally(function() {
+                    btn.disabled = false;
+                    btn.textContent = 'Tạo key mới';
+                });
+            });
+        })();
+        </script>
         <?php
     }
 

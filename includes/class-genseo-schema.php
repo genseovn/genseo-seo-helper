@@ -92,7 +92,7 @@ class GenSeo_Schema {
      * @param int $post_id Post ID
      * @return array
      */
-    private static function generate_article_schema($post_id) {
+    public static function generate_article_schema($post_id) {
         $post = get_post($post_id);
 
         // Lấy data
@@ -185,7 +185,7 @@ class GenSeo_Schema {
      * @param int $post_id Post ID
      * @return array
      */
-    private static function generate_howto_schema($post_id) {
+    public static function generate_howto_schema($post_id) {
         $post = get_post($post_id);
 
         $seo_title = genseo_get_post_meta($post_id, 'seo_title');
@@ -240,7 +240,7 @@ class GenSeo_Schema {
      * @param int $post_id Post ID
      * @return array
      */
-    private static function generate_faq_schema($post_id) {
+    public static function generate_faq_schema($post_id) {
         $post = get_post($post_id);
 
         $seo_title = genseo_get_post_meta($post_id, 'seo_title');

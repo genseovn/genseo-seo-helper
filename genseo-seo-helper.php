@@ -2,9 +2,9 @@
 /**
  * Plugin Name: GenSeo SEO Helper
  * Plugin URI: https://genseo.app
- * Description: Tối ưu SEO cho bài viết từ GenSeo Desktop - OpenGraph, Schema markup, RankMath/Yoast sync
- * Version: 1.1.0
- * Requires at least: 5.8
+ * Description: Tối ưu SEO cho bài viết từ GenSeo Desktop - OpenGraph, Schema markup, RankMath/Yoast sync, MCP Abilities
+ * Version: 2.0.3
+ * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: GenSeo Team
  * Author URI: https://genseo.app
@@ -12,6 +12,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: genseo-seo-helper
  * Domain Path: /languages
+ * Update URI: https://server.genseo.vn/api/plugin/check-update
  *
  * @package GenSeo_SEO_Helper
  */
@@ -25,7 +26,7 @@ if (!defined('ABSPATH')) {
 // CONSTANTS
 // ============================================================
 
-define('GENSEO_VERSION', '1.1.0');
+define('GENSEO_VERSION', '2.0.3');
 define('GENSEO_PLUGIN_FILE', __FILE__);
 define('GENSEO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('GENSEO_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -75,6 +76,8 @@ function genseo_activate() {
         'publisher_logo'       => 0,
         'twitter_username'     => '',
         'schema_type_default'  => 'Article',
+        'api_key'              => '',
+        'api_key_user_id'      => 0,
     );
 
     // Chỉ thêm nếu chưa tồn tại
@@ -82,8 +85,19 @@ function genseo_activate() {
         add_option('genseo_settings', $default_options);
     }
 
+    // Tạo API Key nếu chưa có
+    $settings = get_option('genseo_settings', array());
+    if (empty($settings['api_key'])) {
+        $settings['api_key'] = wp_generate_password(64, false, false);
+        $settings['api_key_user_id'] = get_current_user_id();
+        update_option('genseo_settings', $settings);
+    }
+
     // Flush rewrite rules cho REST API
     flush_rewrite_rules();
+
+    // Tạo bảng audit log
+    GenSeo_Audit_Logger::create_table();
 
     // Log activation
     if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -136,17 +150,48 @@ function genseo_init() {
         GenSeo_Yoast::init();
     }
 
+    // ============================================================
+    // LOAD MCP ADAPTER (BUNDLED)
+    // ============================================================
+    // MCP Adapter được bundle sẵn trong thư mục mcp-adapter/
+    // Không cần user cài riêng - tự động load nếu WP >= 6.9
+    if (function_exists('wp_register_ability') && !class_exists('WP\\MCP\\Plugin')) {
+        $mcp_adapter_file = GENSEO_PLUGIN_DIR . 'mcp-adapter/mcp-adapter.php';
+        if (file_exists($mcp_adapter_file)) {
+            require_once $mcp_adapter_file;
+        }
+    }
+
+    // MCP Abilities (chỉ init nếu WP >= 6.9 có Abilities API trong core)
+    if (function_exists('wp_register_ability')) {
+        GenSeo_MCP_Abilities::init();
+    } else {
+        // WP < 6.9: hiện admin notice
+        add_action('admin_notices', 'genseo_wp_version_notice');
+    }
+
+    // WAF Compatibility (Wordfence, Imunify360, ModSecurity) - luon chay
+    GenSeo_WAF_Compat::init();
+
+    // API Key Authentication - bypass WAF/Firewall
+    GenSeo_API_Key_Auth::init();
+
+    // Rate Limiter — bao ve MCP/REST endpoints khoi lam dung
+    GenSeo_Rate_Limiter::init();
+
+    // Audit Logger — ghi log các thao tác MCP write operations
+    GenSeo_Audit_Logger::init();
+
     // Admin only
     if (is_admin()) {
         GenSeo_Admin::init();
+        GenSeo_Updater::init();
+        GenSeo_Diagnostic::init();
     }
 
-    // Đăng ký admin-ajax fallback cho health check (Wordfence có thể chặn REST API nhưng không chặn admin-ajax)
+    // Đăng ký admin-ajax fallback cho health check (WAF có thể chặn REST API nhưng không chặn admin-ajax)
     add_action('wp_ajax_genseo_health', 'genseo_ajax_health_check');
     add_action('wp_ajax_nopriv_genseo_health', 'genseo_ajax_health_check');
-
-    // Wordfence compatibility: whitelist GenSeo REST endpoints
-    genseo_wordfence_compat();
 }
 add_action('plugins_loaded', 'genseo_init');
 
@@ -198,50 +243,33 @@ function genseo_ajax_health_check() {
 }
 
 // ============================================================
-// WORDFENCE COMPATIBILITY
+// WP VERSION NOTICE (< 6.9)
 // ============================================================
 
 /**
- * Tự động whitelist GenSeo REST endpoints trong Wordfence
- * - Thêm CORS headers cho namespace genseo/v1
- * - Cho phép request có User-Agent chứa "GenSeo" qua firewall
+ * Hiển thị cảnh báo nếu WordPress < 6.9 (không có Abilities API)
+ * SEO features vẫn hoạt động, chỉ MCP bị tắt
  */
-function genseo_wordfence_compat() {
-    // Thêm CORS + cache headers cho GenSeo REST endpoints
-    add_filter('rest_pre_serve_request', function($served, $result, $request, $server) {
-        $route = $request->get_route();
-        if (strpos($route, '/genseo/v1/') === 0) {
-            header('Access-Control-Allow-Origin: *');
-            header('Access-Control-Allow-Headers: Content-Type, Authorization, User-Agent');
-            header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-        }
-        return $served;
-    }, 10, 4);
-
-    // Nếu Wordfence active, thử whitelist URL pattern
-    if (class_exists('wfConfig') || defined('WORDFENCE_VERSION')) {
-        // Cho phép GenSeo REST requests không bị rate-limited
-        add_filter('wordfence_allow_ip', function($allow, $ip) {
-            // Kiểm tra User-Agent chứa "GenSeo"
-            $ua = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-            if (stripos($ua, 'GenSeo') !== false) {
-                return true;
-            }
-            return $allow;
-        }, 10, 2);
-
-        // Whitelist REST endpoint URL pattern
-        add_filter('wordfence_ls_require_captcha', function($require) {
-            $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-            if (strpos($request_uri, '/wp-json/genseo/') !== false) {
-                return false;
-            }
-            if (strpos($request_uri, 'rest_route=/genseo/') !== false) {
-                return false;
-            }
-            return $require;
-        });
+function genseo_wp_version_notice() {
+    if (!current_user_can('manage_options')) {
+        return;
     }
+    global $wp_version;
+    ?>
+    <div class="notice notice-warning">
+        <p>
+            <strong>GenSeo SEO Helper:</strong>
+            <?php
+            printf(
+                /* translators: %1$s: current WP version, %2$s: required version */
+                esc_html__('MCP Abilities cần WordPress %1$s trở lên (bạn đang dùng %2$s). Các tính năng SEO (OpenGraph, Schema, REST API) vẫn hoạt động bình thường.', 'genseo-seo-helper'),
+                '6.9',
+                esc_html($wp_version)
+            );
+            ?>
+        </p>
+    </div>
+    <?php
 }
 
 // ============================================================
