@@ -4,7 +4,7 @@ Tags: seo, opengraph, schema, rankmath, yoast
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.2
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -102,6 +102,11 @@ Nếu trả về `"status": "healthy"` là OK.
 3. Output OpenGraph meta tags
 
 == Changelog ==
+
+= 2.2.0 =
+* Đồng bộ thêm Twitter Card, Pillar Content cho RankMath
+* Đồng bộ thêm Twitter title/description, reading time cho Yoast SEO
+* Sửa lỗi API Key proxy không gửi slug khi tạo bài mới
 
 = 2.0.3 =
 * Them debug info vao response 403 khi API Key khong hop le (hien thi prefix/length de chan doan)
