@@ -46,9 +46,14 @@ class GenSeo_API_Key_Auth {
     }
 
     /**
-     * Lấy API Key hiện tại từ settings
+     * Lấy API Key hiện tại
+     * Ưu tiên option riêng (bảo tồn qua reinstall), fallback về genseo_settings
      */
     public static function get_key() {
+        $key = get_option('genseo_api_key', '');
+        if (!empty($key)) {
+            return $key;
+        }
         return genseo_get_setting('api_key', '');
     }
 
@@ -78,9 +83,13 @@ class GenSeo_API_Key_Auth {
      */
     public static function regenerate_key() {
         $new_key = self::generate_key();
-        genseo_update_setting('api_key', $new_key);
 
-        // Lưu user ID của admin tạo key
+        // Lưu vào option riêng (bảo tồn qua reinstall)
+        update_option('genseo_api_key', $new_key, false);
+        update_option('genseo_api_key_user_id', get_current_user_id(), false);
+
+        // Đồng bộ vào genseo_settings (tương thích ngược)
+        genseo_update_setting('api_key', $new_key);
         genseo_update_setting('api_key_user_id', get_current_user_id());
 
         return $new_key;
@@ -91,7 +100,11 @@ class GenSeo_API_Key_Auth {
      * Dùng để set current user khi xử lý request
      */
     public static function get_key_owner_user_id() {
-        $user_id = genseo_get_setting('api_key_user_id', 0);
+        // Ưu tiên option riêng
+        $user_id = get_option('genseo_api_key_user_id', 0);
+        if (empty($user_id)) {
+            $user_id = genseo_get_setting('api_key_user_id', 0);
+        }
         if ($user_id && get_user_by('id', $user_id)) {
             return (int) $user_id;
         }
@@ -143,6 +156,42 @@ class GenSeo_API_Key_Auth {
     }
 
     // ============================================================
+    // BODY READER (WAF-safe)
+    // ============================================================
+
+    /**
+     * Đọc request body, hỗ trợ cả json_payload form field (WAF-safe) và raw JSON
+     * Desktop v0.8.5+ gửi form-urlencoded với json_payload field để bypass
+     * WAF/OpenResty chặn Content-Type: application/json tới admin-ajax.php
+     * @return array|null Parsed request data hoặc null nếu không đọc được
+     */
+    private static function read_request_body() {
+        // Ưu tiên 1: json_payload form field (desktop mới gửi form-urlencoded)
+        if (!empty($_POST['json_payload'])) {
+            $decoded = json_decode(wp_unslash($_POST['json_payload']), true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        // Ưu tiên 2: raw JSON body (backward compat với desktop cũ)
+        $raw_body = file_get_contents('php://input');
+        if ($raw_body) {
+            $decoded = json_decode($raw_body, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        // Fallback: $_POST trực tiếp
+        if (!empty($_POST)) {
+            return $_POST;
+        }
+
+        return null;
+    }
+
+    // ============================================================
     // TEST CONNECTION ENDPOINT
     // ============================================================
 
@@ -160,14 +209,8 @@ class GenSeo_API_Key_Auth {
             return;
         }
 
-        // Đọc body
-        $raw_body = file_get_contents('php://input');
-        $request = $raw_body ? json_decode($raw_body, true) : null;
-
-        if (!is_array($request)) {
-            // Fallback: thử đọc từ $_POST
-            $request = $_POST;
-        }
+        // Đọc body (hỗ trợ form-urlencoded json_payload + raw JSON + $_POST fallback)
+        $request = self::read_request_body();
 
         $api_key = isset($request['api_key']) ? sanitize_text_field($request['api_key']) : '';
 
@@ -238,9 +281,8 @@ class GenSeo_API_Key_Auth {
             return;
         }
 
-        // Đọc body
-        $raw_body = file_get_contents('php://input');
-        $request = $raw_body ? json_decode($raw_body, true) : null;
+        // Đọc body (hỗ trợ form-urlencoded json_payload + raw JSON fallback)
+        $request = self::read_request_body();
 
         if (!is_array($request)) {
             wp_send_json(array('success' => false, 'data' => array('message' => 'Invalid JSON body.')), 400);
@@ -362,6 +404,11 @@ class GenSeo_API_Key_Auth {
             'post_excerpt' => sanitize_text_field($data['excerpt'] ?? ''),
             'post_author'  => get_current_user_id(),
         );
+
+        // SEO slug
+        if (!empty($data['slug'])) {
+            $post_data['post_name'] = sanitize_title($data['slug']);
+        }
 
         // Categories
         if (!empty($data['categories']) && is_array($data['categories'])) {
@@ -514,11 +561,28 @@ class GenSeo_API_Key_Auth {
             return;
         }
 
+        // Kiểm tra kích thước base64 string trước khi decode (phát hiện truncation sớm)
+        $base64_length = strlen($base64);
+
         // Parse base64 data URL
         $content_type = 'image/png';
         if (preg_match('/^data:([\w\/\+\-]+);base64,/', $base64, $matches)) {
             $content_type = $matches[1];
             $base64 = preg_replace('/^data:[\w\/\+\-]+;base64,/', '', $base64);
+        }
+
+        // Validate base64 string (phát hiện truncation: base64 hợp lệ phải có length chia hết cho 4)
+        $clean_base64 = rtrim($base64);
+        if (strlen($clean_base64) % 4 !== 0) {
+            wp_send_json(array('success' => false, 'data' => array(
+                'message' => 'Base64 data bị cắt (truncated). Ảnh quá lớn cho POST request. Hãy bật tính năng Resize ảnh trong cài đặt dự án GenSeo hoặc giảm kích thước ảnh.',
+                'debug' => array(
+                    'base64_length' => strlen($clean_base64),
+                    'post_max_size' => ini_get('post_max_size'),
+                    'upload_max_filesize' => ini_get('upload_max_filesize'),
+                ),
+            )), 400);
+            return;
         }
 
         // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
@@ -531,6 +595,22 @@ class GenSeo_API_Key_Auth {
         // Max 10MB
         if (strlen($file_data) > 10 * 1024 * 1024) {
             wp_send_json(array('success' => false, 'data' => array('message' => 'File quá lớn (max 10MB).')), 400);
+            return;
+        }
+
+        // Validate ảnh sau decode: kiểm tra header PNG/JPEG/GIF/WEBP để đảm bảo không bị corrupt
+        $header = substr($file_data, 0, 8);
+        $is_valid_image = false;
+        if (substr($header, 0, 8) === "\x89PNG\r\n\x1a\n") $is_valid_image = true;       // PNG
+        elseif (substr($header, 0, 2) === "\xFF\xD8") $is_valid_image = true;              // JPEG
+        elseif (substr($header, 0, 3) === 'GIF') $is_valid_image = true;                    // GIF
+        elseif (substr($header, 0, 4) === 'RIFF' && substr($file_data, 8, 4) === 'WEBP') $is_valid_image = true; // WebP
+
+        if (!$is_valid_image) {
+            wp_send_json(array('success' => false, 'data' => array(
+                'message' => 'File không phải ảnh hợp lệ sau decode. Dữ liệu có thể bị hỏng trong quá trình truyền.',
+                'debug' => array('decoded_size' => strlen($file_data), 'base64_received' => $base64_length),
+            )), 400);
             return;
         }
 
@@ -562,11 +642,26 @@ class GenSeo_API_Key_Auth {
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
         $upload_dir = wp_upload_dir();
+
+        // Dùng wp_unique_filename() để tránh collision (file trùng tên → WP thêm suffix → URL sai)
+        $filename = wp_unique_filename($upload_dir['path'], $filename);
         $upload_path = $upload_dir['path'] . '/' . $filename;
 
         // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-        if (file_put_contents($upload_path, $file_data) === false) {
+        $bytes_written = file_put_contents($upload_path, $file_data);
+        if ($bytes_written === false) {
             wp_send_json(array('success' => false, 'data' => array('message' => 'Không ghi được file vào thư mục uploads.')), 500);
+            return;
+        }
+
+        // Validate: số bytes ghi phải khớp với dữ liệu gốc
+        if ($bytes_written !== strlen($file_data)) {
+            // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
+            @unlink($upload_path);
+            wp_send_json(array('success' => false, 'data' => array(
+                'message' => 'File ghi không đầy đủ (disk full hoặc lỗi I/O).',
+                'debug' => array('expected' => strlen($file_data), 'written' => $bytes_written),
+            )), 500);
             return;
         }
 
@@ -580,6 +675,8 @@ class GenSeo_API_Key_Auth {
 
         $attach_id = wp_insert_attachment($attachment, $upload_path);
         if (is_wp_error($attach_id)) {
+            // phpcs:ignore WordPress.WP.AlternativeFunctions.unlink_unlink
+            @unlink($upload_path);
             wp_send_json(array('success' => false, 'data' => array('message' => $attach_id->get_error_message())), 500);
             return;
         }

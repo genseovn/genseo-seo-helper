@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenSeo SEO Copilot v2 — AI-First SEO Powerhouse</title>
+<style>
+/* ============================================================
+   GENSEO SEO COPILOT — MOCKUP V2: AI-FIRST SEO POWERHOUSE
+   Brand: #00B87A | Tiếng Việt có dấu
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;font-size:13px;line-height:1.4;color:#1d2327;background:#f0f0f1;}
+
+:root{
+  --brand:#00B87A;--brand-dark:#009966;--brand-light:#e8f8f2;--brand-glow:rgba(0,184,122,0.15);
+  --wp-blue:#2271b1;--success:#00a32a;--warning:#dba617;--error:#d63638;--info:#0073aa;
+  --text-1:#1d2327;--text-2:#646970;--text-3:#a0a5aa;--border:#c3c4c7;--bg:#f6f7f7;--white:#fff;
+  --purple:#7c3aed;--pink:#ec4899;--orange:#f97316;--cyan:#06b6d4;
+  --shadow-sm:0 1px 3px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 30px rgba(0,0,0,0.12);
+  --radius:6px;--radius-lg:10px;
+}
+
+/* === WP ADMIN SKELETON === */
+#wpadminbar{background:#1d2327;height:32px;display:flex;align-items:center;padding:0 16px;color:#c3c4c7;font-size:13px;position:fixed;width:100%;top:0;z-index:999;}
+#wpadminbar .mockup-label{margin-left:auto;color:#73e8b7;font-size:11px;font-weight:600;background:rgba(0,184,122,0.2);padding:2px 10px;border-radius:20px;}
+
+#sidebar{background:#1d2327;width:220px;position:fixed;top:32px;bottom:0;left:0;overflow-y:auto;z-index:998;padding-top:8px;}
+#sidebar ul{list-style:none;}
+#sidebar li a{display:flex;align-items:center;gap:8px;padding:8px 14px;color:#c3c4c7;text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .15s;}
+#sidebar li a:hover{background:#2c3338;color:#fff;}
+#sidebar li.active>a{background:rgba(0,184,122,0.15);color:#73e8b7;border-left-color:var(--brand);font-weight:600;}
+#sidebar .sep{border-top:1px solid #3c434a;margin:6px 12px;}
+#sidebar .menu-icon{width:20px;text-align:center;font-size:16px;flex-shrink:0;}
+#sidebar .brand-block{padding:12px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #3c434a;margin-bottom:8px;}
+#sidebar .brand-block .brand-logo{width:28px;height:28px;background:var(--brand);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;}
+#sidebar .brand-block .brand-name{color:#fff;font-size:14px;font-weight:600;}
+#sidebar .brand-block .brand-ver{font-size:10px;color:#73e8b7;}
+
+#main{margin-left:220px;margin-top:32px;padding:24px 30px;min-height:calc(100vh - 32px);}
+
+/* === PAGE HEADER === */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.page-header h1{font-size:22px;font-weight:700;color:var(--text-1);display:flex;align-items:center;gap:10px;}
+.page-header .breadcrumb{font-size:12px;color:var(--text-2);}
+.page-header .header-actions{display:flex;gap:8px;}
+
+/* === BADGES === */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+.badge-green{background:var(--brand-light);color:var(--brand-dark);}
+.badge-blue{background:#e8f0fe;color:#1a56db;}
+.badge-amber{background:#fef3e0;color:#92600a;}
+.badge-red{background:#fde8e8;color:#a00;}
+.badge-purple{background:#f3e8ff;color:var(--purple);}
+.badge-premium{background:linear-gradient(135deg,#00B87A,#009966);color:#fff;padding:3px 12px;}
+.badge-ai{background:linear-gradient(135deg,var(--brand),#009966);color:#fff;}
+
+/* === BUTTONS === */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;font-size:13px;border-radius:var(--radius);cursor:pointer;text-decoration:none;border:1px solid;font-family:inherit;transition:all .15s;white-space:nowrap;font-weight:500;}
+.btn-primary{background:var(--brand);border-color:var(--brand-dark);color:#fff;}
+.btn-primary:hover{background:var(--brand-dark);box-shadow:0 2px 8px var(--brand-glow);}
+.btn-secondary{background:var(--white);border-color:var(--border);color:var(--text-1);}
+.btn-secondary:hover{background:var(--bg);border-color:#999;}
+.btn-ai{background:linear-gradient(135deg,var(--brand),#009966);border:none;color:#fff;font-weight:600;}
+.btn-ai:hover{opacity:.9;box-shadow:0 2px 12px var(--brand-glow);}
+.btn-danger{background:#fff;border-color:var(--error);color:var(--error);}
+.btn-lg{padding:10px 24px;font-size:14px;border-radius:8px;}
+.btn-sm{padding:4px 10px;font-size:11px;}
+.btn[disabled]{opacity:.4;cursor:not-allowed;pointer-events:none;}
+
+/* === CARDS === */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
+.card-header{padding:14px 18px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;}
+.card-header h3{font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.card-body{padding:18px;}
+.card-footer{padding:12px 18px;border-top:1px solid #eee;background:var(--bg);}
+
+/* === STAT CARDS === */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
+.stat-card:hover{box-shadow:var(--shadow-md);}
+.stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.stat-icon.g{background:var(--brand-light);color:var(--brand);}
+.stat-icon.b{background:#e8f0fe;color:var(--wp-blue);}
+.stat-icon.a{background:#fef3e0;color:var(--warning);}
+.stat-icon.r{background:#fde8e8;color:var(--error);}
+.stat-icon.p{background:#f3e8ff;color:var(--purple);}
+.stat-num{font-size:26px;font-weight:800;line-height:1;}
+.stat-label{font-size:12px;color:var(--text-2);margin-top:2px;}
+.stat-change{font-size:11px;font-weight:600;margin-top:2px;}
+.stat-change.up{color:var(--success);}
+.stat-change.down{color:var(--error);}
+
+/* === TABLES === */
+.data-table{width:100%;border-collapse:collapse;}
+.data-table thead th{padding:10px 12px;font-weight:600;text-align:left;border-bottom:2px solid var(--border);background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:var(--text-2);}
+.data-table tbody td{padding:10px 12px;border-bottom:1px solid #eee;vertical-align:middle;font-size:13px;}
+.data-table tbody tr:hover{background:#fafbfc;}
+
+/* === TABS === */
+.tab-nav{display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:18px;}
+.tab-btn{padding:10px 18px;font-size:13px;font-weight:500;color:var(--text-2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;font-family:inherit;display:flex;align-items:center;gap:6px;}
+.tab-btn:hover{color:var(--text-1);}
+.tab-btn.active{color:var(--brand);border-bottom-color:var(--brand);font-weight:600;}
+.tab-btn .count{background:var(--bg);padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600;}
+.tab-btn.active .count{background:var(--brand-light);color:var(--brand-dark);}
+
+/* === PROGRESS === */
+.progress{background:#e8e8e8;border-radius:6px;height:8px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:6px;transition:width .5s ease;}
+.progress-fill.green{background:linear-gradient(90deg,var(--brand),#00d68f);}
+.progress-fill.amber{background:linear-gradient(90deg,#f59e0b,#fbbf24);}
+.progress-fill.red{background:linear-gradient(90deg,#dc2626,#ef4444);}
+.progress-fill.brand{background:linear-gradient(90deg,var(--brand),var(--brand-dark));}
+.progress-lg{height:20px;}
+.progress-lg .progress-fill{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;}
+
+/* === CHARTS === */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding:8px 0;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-col .bar{width:100%;border-radius:4px 4px 0 0;min-height:4px;transition:height .3s;}
+.bar-col .bar-label{font-size:9px;color:var(--text-3);text-align:center;}
+.bar-col .bar-val{font-size:10px;font-weight:600;color:var(--text-1);}
+
+/* === DONUT === */
+.donut-chart{position:relative;width:140px;height:140px;margin:0 auto;}
+.donut-chart .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.donut-chart .donut-num{font-size:28px;font-weight:800;color:var(--text-1);}
+.donut-chart .donut-label{font-size:10px;color:var(--text-2);}
+
+/* === AUDIT ITEMS === */
+.audit-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius);margin-bottom:6px;transition:background .15s;cursor:pointer;}
+.audit-item:hover{background:var(--bg);}
+.audit-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
+.audit-icon.pass{background:var(--brand-light);color:var(--brand);}
+.audit-icon.warn{background:#fef3e0;color:var(--warning);}
+.audit-icon.fail{background:#fde8e8;color:var(--error);}
+.audit-icon.info{background:#e8f0fe;color:var(--info);}
+.audit-content{flex:1;}
+.audit-title{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:2px;}
+.audit-desc{font-size:12px;color:var(--text-2);line-height:1.5;}
+.audit-meta{font-size:11px;color:var(--text-3);margin-top:4px;display:flex;gap:12px;}
+.audit-impact{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:auto;flex-shrink:0;}
+.audit-impact.high{background:#fde8e8;color:var(--error);}
+.audit-impact.medium{background:#fef3e0;color:#92600a;}
+.audit-impact.low{background:#e8f0fe;color:var(--info);}
+
+/* === SERP PREVIEW === */
+.serp{border:1px solid #dadce0;border-radius:8px;padding:14px 16px;background:var(--white);max-width:580px;}
+.serp-url{font-size:12px;color:#202124;display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+.serp-url .fav{width:18px;height:18px;background:var(--brand);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700;}
+.serp-t{font-size:18px;color:#1a0dab;margin-bottom:3px;line-height:1.3;}
+.serp-d{font-size:13px;color:#4d5156;line-height:1.5;}
+.serp-rich{margin-top:5px;font-size:12px;color:#70757a;}
+.serp-stars{color:#fbbc04;}
+.serp-price{color:var(--text-1);font-weight:600;}
+
+/* === FILTER BAR === */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.filter-bar select,.filter-bar input[type="text"]{padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:inherit;}
+.filter-bar input[type="text"]{width:220px;}
+
+/* === INLINE EDIT === */
+.inline-input{width:100%;padding:4px 6px;border:1px solid transparent;border-radius:3px;font-size:12px;background:transparent;font-family:inherit;transition:all .15s;}
+.inline-input:hover{border-color:#ddd;background:#fafafa;}
+.inline-input:focus{border-color:var(--brand);background:var(--white);outline:none;box-shadow:0 0 0 2px var(--brand-glow);}
+
+/* === SCHEMA PICKER === */
+.schema-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;}
+.schema-opt{border:2px solid var(--border);border-radius:8px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .15s;background:var(--white);}
+.schema-opt:hover{border-color:var(--brand);background:var(--brand-light);}
+.schema-opt.active{border-color:var(--brand);background:var(--brand-light);box-shadow:0 0 0 3px var(--brand-glow);}
+.schema-opt .s-icon{font-size:20px;display:block;margin-bottom:2px;}
+.schema-opt .s-label{font-size:10px;font-weight:600;display:block;}
+.schema-opt .s-auto{font-size:8px;color:var(--brand);}
+
+/* === META FIELD === */
+.mf{margin-bottom:12px;}
+.mf label{display:flex;align-items:center;justify-content:space-between;font-weight:600;margin-bottom:4px;font-size:12px;color:var(--text-1);}
+.mf input[type="text"],.mf textarea,.mf select{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;font-family:inherit;}
+.mf textarea{height:60px;resize:vertical;}
+.mf .char{font-size:10px;color:var(--text-3);text-align:right;margin-top:2px;}
+.mf .char.ok{color:var(--brand);}
+.mf .char.warn{color:var(--warning);}
+.mf .char.bad{color:var(--error);}
+.ai-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;font-size:10px;background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;border:none;border-radius:12px;cursor:pointer;font-weight:600;}
+
+/* === KEYWORD TAG === */
+.kw-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.kw-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:var(--brand-light);border:1px solid #b0dac8;border-radius:14px;font-size:11px;color:var(--brand-dark);font-weight:500;}
+.kw-tag .vol{color:var(--text-3);font-size:10px;}
+
+/* === INTERNAL LINK SUGGEST === */
+.link-suggest{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;background:var(--white);}
+.link-suggest:hover{border-color:var(--brand);background:var(--brand-light);}
+.link-suggest .ls-score{width:36px;height:36px;border-radius:50%;background:var(--brand-light);color:var(--brand);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;}
+.link-suggest .ls-content{flex:1;}
+.link-suggest .ls-title{font-size:13px;font-weight:600;color:var(--text-1);}
+.link-suggest .ls-url{font-size:11px;color:var(--text-2);}
+.link-suggest .ls-reason{font-size:11px;color:var(--brand-dark);margin-top:2px;}
+
+/* === CONTENT ANALYSIS === */
+.analysis-meter{display:flex;align-items:center;gap:10px;padding:8px 0;}
+.analysis-meter .meter-label{width:140px;font-size:12px;color:var(--text-2);flex-shrink:0;}
+.analysis-meter .meter-bar{flex:1;height:6px;background:#e8e8e8;border-radius:3px;overflow:hidden;}
+.analysis-meter .meter-fill{height:100%;border-radius:3px;}
+.analysis-meter .meter-val{width:40px;text-align:right;font-size:12px;font-weight:600;}
+
+/* === TIMELINE === */
+.timeline{border-left:2px solid var(--border);padding-left:16px;margin-left:8px;}
+.timeline-item{position:relative;padding-bottom:16px;}
+.timeline-item::before{content:'';position:absolute;left:-21px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--brand);background:var(--white);}
+.timeline-item.done::before{background:var(--brand);}
+.timeline-date{font-size:10px;color:var(--text-3);margin-bottom:2px;}
+.timeline-text{font-size:12px;color:var(--text-1);}
+
+/* === LAYOUT === */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.grid-sidebar{display:grid;grid-template-columns:1fr 340px;gap:20px;}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.anim-in{animation:fadeIn .3s ease;}
+.loading{animation:pulse 1.5s ease infinite;}
+
+/* === PAGES === */
+.page{display:none;}
+.page.active{display:block;}
+
+/* === NAV FLOAT === */
+.page-nav{position:fixed;bottom:20px;right:20px;z-index:2000;background:var(--white);border:2px solid var(--brand);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-lg);max-height:80vh;overflow-y:auto;}
+.page-nav h4{font-size:11px;color:var(--brand);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;}
+.page-nav .pn-btn{display:flex;align-items:center;gap:6px;padding:5px 10px;margin-bottom:3px;font-size:11px;cursor:pointer;border:none;background:none;color:var(--text-2);text-align:left;width:100%;border-radius:4px;transition:all .1s;font-family:inherit;}
+.page-nav .pn-btn:hover{background:var(--bg);color:var(--text-1);}
+.page-nav .pn-btn.active{background:var(--brand);color:#fff;font-weight:600;}
+.page-nav .pn-num{width:18px;height:18px;border-radius:50%;background:var(--bg);color:var(--text-2);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;}
+.page-nav .pn-btn.active .pn-num{background:rgba(255,255,255,.3);color:#fff;}
+
+@media(max-width:1100px){
+  #sidebar{width:52px;}
+  #sidebar .brand-block .brand-name,#sidebar .brand-block .brand-ver,#sidebar li a span:not(.menu-icon){display:none;}
+  #main{margin-left:52px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== ADMIN BAR ====== -->
+<div id="wpadminbar">
+  <span style="font-weight:600;">WordPress</span>
+  <span class="mockup-label">MOCKUP V2 — GenSeo SEO Copilot AI Powerhouse</span>
+</div>
+
+<!-- ====== SIDEBAR ====== -->
+<div id="sidebar">
+  <div class="brand-block">
+    <div class="brand-logo">G</div>
+    <div>
+      <div class="brand-name">GenSeo SEO Copilot</div>
+      <div class="brand-ver">v3.0 Premium</div>
+    </div>
+  </div>
+  <ul>
+    <li class="active" data-p="dashboard"><a href="#" onclick="go('dashboard')"><span class="menu-icon">&#9632;</span><span>Tổng quan</span></a></li>
+    <li data-p="audit"><a href="#" onclick="go('audit')"><span class="menu-icon">&#9733;</span><span>Kiểm tra SEO</span></a></li>
+    <li data-p="bulk"><a href="#" onclick="go('bulk')"><span class="menu-icon">&#9998;</span><span>Sửa hàng loạt</span></a></li>
+    <li data-p="ai-result"><a href="#" onclick="go('ai-result')"><span class="menu-icon">&#10024;</span><span>Kết quả AI</span></a></li>
+    <li data-p="keywords"><a href="#" onclick="go('keywords')"><span class="menu-icon">&#9881;</span><span>Từ khóa & Liên kết</span></a></li>
+    <li data-p="metabox"><a href="#" onclick="go('metabox')"><span class="menu-icon">&#9776;</span><span>Meta Box</span></a></li>
+    <li class="sep"></li>
+    <li data-p="settings"><a href="#" onclick="go('settings')"><span class="menu-icon">&#9881;</span><span>Cài đặt</span></a></li>
+    <li data-p="license"><a href="#" onclick="go('license')"><span class="menu-icon">&#9670;</span><span>Giấy phép</span></a></li>
+  </ul>
+</div>
+
+<!-- ====== MAIN CONTENT ====== -->
+<div id="main">
+
+<!-- ================================================================ -->
+<!-- 1. TỔNG QUAN — SEO Command Center                                -->
+<!-- ================================================================ -->
+<div class="page active" id="p-dashboard">
+  <div class="page-header">
+    <div>
+      <h1>Trung tâm điều khiển SEO <span class="badge badge-premium">PREMIUM</span></h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Tổng quan</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ai btn-lg" onclick="go('audit')">Chạy kiểm tra SEO toàn site</button>
+      <button class="btn btn-primary" onclick="go('bulk')">AI sinh hàng loạt</button>
+    </div>
+  </div>
+
+  <!-- Overall Score + Stats -->
+  <div style="display:grid;grid-template-columns:280px 1fr;gap:16px;margin-bottom:20px;">
+    <!-- Big Score -->
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+      <div class="donut-chart">
+        <svg width="140" height="140" viewBox="0 0 140 140">
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#e8e8e8" stroke-width="10"/>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="url(#grad1)" stroke-width="10" stroke-dasharray="364.4" stroke-dashoffset="72.9" stroke-linecap="round"/>
+          <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#00B87A"/><stop offset="100%" style="stop-color:#009966"/></linearGradient></defs>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-num" style="color:var(--brand);">78</div>
+          <div class="donut-label">Điểm SEO</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;text-align:center;">
+        <div style="font-size:13px;font-weight:600;color:var(--brand);">Khá tốt</div>
+        <div style="font-size:11px;color:var(--text-2);">Tăng 12 điểm so với tháng trước</div>
+      </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon g">&#9632;</div>
+          <div>
+            <div class="stat-num">1.247</div>
+            <div class="stat-label">Tổng nội dung</div>
+            <div class="stat-change up">+23 tuần này</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon g">&#10003;</div>
+          <div>
+            <div class="stat-num" style="color:var(--brand);">892</div>
+            <div class="stat-label">Đã tối ưu SEO</div>
+            <div class="stat-change up">71,5% bao phủ</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon a">!</div>
+          <div>
+            <div class="stat-num" style="color:var(--warning);">203</div>
+            <div class="stat-label">Cần cải thiện</div>
+            <div class="stat-change down">+8 tuần này</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon r">&#10007;</div>
+          <div>
+            <div class="stat-num" style="color:var(--error);">152</div>
+            <div class="stat-label">Chưa có SEO</div>
+            <div class="stat-change up">-15 so với tuần trước</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick AI Insights -->
+      <div class="card">
+        <div class="card-header">
+          <h3>&#10024; Phân tích AI tự động</h3>
+          <span class="badge badge-ai">AI Powered</span>
+        </div>
+        <div class="card-body" style="padding:12px 18px;">
+          <div class="audit-item" style="background:var(--brand-light);border-radius:var(--radius);">
+            <div class="audit-icon fail">!</div>
+            <div class="audit-content">
+              <div class="audit-title">152 sản phẩm chưa có meta description</div>
+              <div class="audit-desc">AI có thể sinh SEO cho tất cả trong ~3 phút. Ước tính tăng 15-20% CTR.</div>
+            </div>
+            <button class="btn btn-ai btn-sm" onclick="go('bulk')">AI sửa ngay</button>
+          </div>
+          <div class="audit-item">
+            <div class="audit-icon warn">!</div>
+            <div class="audit-content">
+              <div class="audit-title">47 trang có SEO title trùng lặp</div>
+              <div class="audit-desc">Google sẽ khó phân biệt các trang này. Nên viết lại title riêng cho từng trang.</div>
+            </div>
+            <button class="btn btn-sm btn-secondary">Xem chi tiết</button>
+          </div>
+          <div class="audit-item">
+            <div class="audit-icon info">i</div>
+            <div class="audit-content">
+              <div class="audit-title">89 trang thiếu liên kết nội bộ</div>
+              <div class="audit-desc">AI đã tìm 234 cơ hội liên kết nội bộ. Tăng phân phối sức mạnh SEO.</div>
+            </div>
+            <button class="btn btn-sm btn-secondary" onclick="go('keywords')">Xem gợi ý</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="grid-2" style="margin-bottom:20px;">
+    <!-- SEO Coverage by Post Type -->
+    <div class="card">
+      <div class="card-header"><h3>Bao phủ SEO theo loại nội dung</h3></div>
+      <div class="card-body">
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:12px;"><strong>Product</strong> <span class="badge badge-green" style="font-size:9px;">WooCommerce</span></span>
+            <span style="font-size:12px;font-weight:600;">410/523 (78%)</span>
+          </div>
+          <div class="progress"><div class="progress-fill green" style="width:78%;"></div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:12px;"><strong>Bài viết</strong></span>
+            <span style="font-size:12px;font-weight:600;">312/384 (81%)</span>
+          </div>
+          <div class="progress"><div class="progress-fill green" style="width:81%;"></div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:12px;"><strong>Trang tĩnh</strong></span>
+            <span style="font-size:12px;font-weight:600;">20/28 (71%)</span>
+          </div>
+          <div class="progress"><div class="progress-fill amber" style="width:71%;"></div></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:12px;"><strong>Portfolio</strong> <span class="badge badge-blue" style="font-size:9px;">CPT</span></span>
+            <span style="font-size:12px;font-weight:600;">89/156 (57%)</span>
+          </div>
+          <div class="progress"><div class="progress-fill amber" style="width:57%;"></div></div>
+        </div>
+        <div style="margin-bottom:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:12px;"><strong>Sự kiện</strong> <span class="badge badge-blue" style="font-size:9px;">CPT</span></span>
+            <span style="font-size:12px;font-weight:600;">61/156 (39%)</span>
+          </div>
+          <div class="progress"><div class="progress-fill red" style="width:39%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schema Distribution -->
+    <div class="card">
+      <div class="card-header"><h3>Phân bố Schema</h3></div>
+      <div class="card-body">
+        <div class="bar-chart">
+          <div class="bar-col"><div class="bar-val">523</div><div class="bar" style="height:100%;background:var(--brand);"></div><div class="bar-label">Product</div></div>
+          <div class="bar-col"><div class="bar-val">287</div><div class="bar" style="height:55%;background:var(--brand-dark);"></div><div class="bar-label">Article</div></div>
+          <div class="bar-col"><div class="bar-val">68</div><div class="bar" style="height:13%;background:var(--orange);"></div><div class="bar-label">HowTo</div></div>
+          <div class="bar-col"><div class="bar-val">45</div><div class="bar" style="height:9%;background:var(--cyan);"></div><div class="bar-label">FAQ</div></div>
+          <div class="bar-col"><div class="bar-val">156</div><div class="bar" style="height:30%;background:var(--wp-blue);"></div><div class="bar-label">Event</div></div>
+          <div class="bar-col"><div class="bar-val">28</div><div class="bar" style="height:5%;background:#64748b;"></div><div class="bar-label">WebPage</div></div>
+          <div class="bar-col"><div class="bar-val">89</div><div class="bar" style="height:17%;background:#0e7490;"></div><div class="bar-label">Creative</div></div>
+          <div class="bar-col"><div class="bar-val">0</div><div class="bar" style="height:2%;background:#e8e8e8;"></div><div class="bar-label">Recipe</div></div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11px;color:var(--text-2);">Tổng: <strong>1.196</strong> trang có schema</span>
+          <span style="font-size:11px;color:var(--brand);">|</span>
+          <span style="font-size:11px;color:var(--error);">51 trang thiếu schema</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent AI Activity -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header"><h3>Hoạt động AI gần đây</h3><span style="font-size:12px;color:var(--text-2);">7 ngày qua</span></div>
+    <div class="card-body" style="padding:14px 18px;">
+      <div class="timeline">
+        <div class="timeline-item done">
+          <div class="timeline-date">Hôm nay, 14:32</div>
+          <div class="timeline-text">AI sinh SEO hàng loạt cho <strong>45 sản phẩm</strong> danh mục "Phụ kiện" <span class="badge badge-green" style="font-size:9px;">Hoàn thành</span></div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">Hôm nay, 10:15</div>
+          <div class="timeline-text">Kiểm tra SEO toàn site — Điểm: 78/100 (+3) <span class="badge badge-green" style="font-size:9px;">Hoàn thành</span></div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">Hôm qua, 16:20</div>
+          <div class="timeline-text">AI phát hiện <strong>12 SEO title trùng lặp</strong> và tự động gợi ý sửa <span class="badge badge-amber" style="font-size:9px;">5 đã áp dụng</span></div>
+        </div>
+        <div class="timeline-item done">
+          <div class="timeline-date">18/03, 09:00</div>
+          <div class="timeline-text">AI Internal Link: Tìm thấy <strong>67 cơ hội</strong> liên kết nội bộ mới</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 2. KIỂM TRA SEO — SEO Audit                                     -->
+<!-- ================================================================ -->
+<div class="page" id="p-audit">
+  <div class="page-header">
+    <div>
+      <h1>Kiểm tra SEO <span class="badge badge-ai">AI Powered</span></h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Kiểm tra SEO</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ai btn-lg">Chạy kiểm tra mới</button>
+      <button class="btn btn-secondary">Xuất báo cáo PDF</button>
+    </div>
+  </div>
+
+  <!-- Audit Summary -->
+  <div class="stats-grid" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="stat-card"><div class="stat-icon g">S</div><div><div class="stat-num" style="color:var(--brand);">78</div><div class="stat-label">Điểm tổng</div></div></div>
+    <div class="stat-card"><div class="stat-icon g">&#10003;</div><div><div class="stat-num" style="color:var(--success);">34</div><div class="stat-label">Đạt chuẩn</div></div></div>
+    <div class="stat-card"><div class="stat-icon a">!</div><div><div class="stat-num" style="color:var(--warning);">12</div><div class="stat-label">Cảnh báo</div></div></div>
+    <div class="stat-card"><div class="stat-icon r">&#10007;</div><div><div class="stat-num" style="color:var(--error);">6</div><div class="stat-label">Lỗi nghiêm trọng</div></div></div>
+    <div class="stat-card"><div class="stat-icon b">&#10024;</div><div><div class="stat-num" style="color:var(--info);">8</div><div class="stat-label">Gợi ý tối ưu</div></div></div>
+  </div>
+
+  <!-- Audit Tabs -->
+  <div class="tab-nav">
+    <button class="tab-btn active">Tất cả <span class="count">60</span></button>
+    <button class="tab-btn">Lỗi nghiêm trọng <span class="count" style="background:#fde8e8;color:var(--error);">6</span></button>
+    <button class="tab-btn">Cảnh báo <span class="count" style="background:#fef3e0;color:#92600a;">12</span></button>
+    <button class="tab-btn">Đạt chuẩn <span class="count">34</span></button>
+    <button class="tab-btn">Gợi ý AI <span class="count" style="background:var(--brand-light);color:var(--brand);">8</span></button>
+  </div>
+
+  <!-- Critical Issues -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header" style="background:#fff5f5;">
+      <h3 style="color:var(--error);">Lỗi nghiêm trọng — Cần sửa ngay</h3>
+      <span class="badge badge-red">6 vấn đề</span>
+    </div>
+    <div class="card-body" style="padding:8px 12px;">
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">152 trang hoàn toàn không có meta description</div>
+          <div class="audit-desc">Google sẽ tự tạo snippet từ nội dung trang, thường không hấp dẫn. Ảnh hưởng trực tiếp đến CTR.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 152 trang</span><span>Loại: product (113), event (28), page (11)</span></div>
+        </div>
+        <span class="audit-impact high">Cao</span>
+        <button class="btn btn-ai btn-sm" onclick="go('bulk')">AI sửa tất cả</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">47 SEO title trùng lặp (duplicate)</div>
+          <div class="audit-desc">Nhiều trang dùng cùng SEO title, khiến Google khó phân biệt và có thể giảm rank. Cần viết title duy nhất cho mỗi trang.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 47 trang</span><span>Nhóm trùng: 15 nhóm</span></div>
+        </div>
+        <span class="audit-impact high">Cao</span>
+        <button class="btn btn-ai btn-sm">AI sửa</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">23 sản phẩm thiếu Product Schema bắt buộc</div>
+          <div class="audit-desc">Thiếu trường <code>price</code>, <code>availability</code> hoặc <code>image</code>. Google sẽ không hiện rich snippet cho sản phẩm.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 23 sản phẩm</span></div>
+        </div>
+        <span class="audit-impact high">Cao</span>
+        <button class="btn btn-sm btn-secondary">Xem danh sách</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">8 trang có SEO title quá dài (&gt;60 ký tự)</div>
+          <div class="audit-desc">Google sẽ cắt ngang title trong SERP. Bạn mất thông điệp quan trọng.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 8 trang</span><span>Dài nhất: 94 ký tự</span></div>
+        </div>
+        <span class="audit-impact medium">Vừa</span>
+        <button class="btn btn-ai btn-sm">AI sửa</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">51 trang thiếu Schema markup</div>
+          <div class="audit-desc">Không có JSON-LD schema. Google không hiểu cấu trúc nội dung, mất cơ hội rich snippet.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 51 trang</span><span>Loại: page (11), event (28), portfolio (12)</span></div>
+        </div>
+        <span class="audit-impact high">Cao</span>
+        <button class="btn btn-sm btn-secondary">Cấu hình schema</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon fail">&#10007;</div>
+        <div class="audit-content">
+          <div class="audit-title">15 ảnh sản phẩm thiếu alt text</div>
+          <div class="audit-desc">Alt text giúp Google hiểu nội dung ảnh và hiển thị trong Image Search. Cũng cải thiện khả năng truy cập.</div>
+          <div class="audit-meta"><span>Ảnh hưởng: 15 ảnh</span></div>
+        </div>
+        <span class="audit-impact medium">Vừa</span>
+        <button class="btn btn-ai btn-sm">AI sinh alt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warnings -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header" style="background:#fffdf5;">
+      <h3 style="color:var(--warning);">Cảnh báo — Nên cải thiện</h3>
+      <span class="badge badge-amber">12 vấn đề</span>
+    </div>
+    <div class="card-body" style="padding:8px 12px;">
+      <div class="audit-item">
+        <div class="audit-icon warn">!</div>
+        <div class="audit-content">
+          <div class="audit-title">89 trang không có liên kết nội bộ đi ra</div>
+          <div class="audit-desc">Trang cô như "đảo hoang" — Google bot khó luân chuyển. AI đã tìm 234 cơ hội liên kết.</div>
+        </div>
+        <span class="audit-impact medium">Vừa</span>
+        <button class="btn btn-sm btn-secondary" onclick="go('keywords')">Xem gợi ý link</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon warn">!</div>
+        <div class="audit-content">
+          <div class="audit-title">34 meta description quá ngắn (&lt;80 ký tự)</div>
+          <div class="audit-desc">Meta description quá ngắn không đủ thuyết phục người dùng click. Khuyến nghị 120-160 ký tự.</div>
+        </div>
+        <span class="audit-impact medium">Vừa</span>
+        <button class="btn btn-ai btn-sm">AI viết lại</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon warn">!</div>
+        <div class="audit-content">
+          <div class="audit-title">28 trang có focus keyword trùng với trang khác</div>
+          <div class="audit-desc">Keyword Cannibalization — nhiều trang cạnh tranh cùng 1 từ khóa, làm yếu tất cả.</div>
+        </div>
+        <span class="audit-impact medium">Vừa</span>
+        <button class="btn btn-sm btn-secondary">Xem chi tiết</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon warn">!</div>
+        <div class="audit-content">
+          <div class="audit-title">67 sản phẩm thiếu thương hiệu (Brand) trong schema</div>
+          <div class="audit-desc">Brand giúp Google hiện Product rich snippet đầy đủ hơn. Sản phẩm có Brand được rank tốt hơn.</div>
+        </div>
+        <span class="audit-impact low">Thấp</span>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon warn">!</div>
+        <div class="audit-content">
+          <div class="audit-title">12 trang có OG Image không đúng kích thước</div>
+          <div class="audit-desc">Khuyến nghị 1200x630px cho OG Image. Ảnh quá nhỏ sẽ hiện mờ khi chia sẻ Facebook/Twitter.</div>
+        </div>
+        <span class="audit-impact low">Thấp</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passed -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header" style="background:var(--brand-light);">
+      <h3 style="color:var(--brand);">Đạt chuẩn</h3>
+      <span class="badge badge-green">34 mục</span>
+    </div>
+    <div class="card-body" style="padding:8px 12px;">
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">892 trang có SEO title đầy đủ (&#8804;60 ký tự)</div></div></div>
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">1.196 trang có JSON-LD Schema markup</div></div></div>
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">523 sản phẩm có Product Schema đầy đủ (price + availability + image)</div></div></div>
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">OpenGraph tags đầy đủ cho 95% nội dung</div></div></div>
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">Không xung đột Schema với Rank Math (đồng bộ hoạt động)</div></div></div>
+      <div class="audit-item"><div class="audit-icon pass">&#10003;</div><div class="audit-content"><div class="audit-title">Tất cả URL canonical thiết lập đúng</div></div></div>
+      <div style="text-align:center;padding:8px;font-size:12px;color:var(--text-2);">... và 28 mục khác đạt chuẩn</div>
+    </div>
+  </div>
+
+  <!-- AI Suggestions -->
+  <div class="card">
+    <div class="card-header" style="background:var(--brand-light);">
+      <h3 style="color:var(--brand);">Gợi ý tối ưu từ AI</h3>
+      <span class="badge badge-ai">8 gợi ý</span>
+    </div>
+    <div class="card-body" style="padding:8px 12px;">
+      <div class="audit-item">
+        <div class="audit-icon" style="background:var(--brand-light);color:var(--brand);">&#10024;</div>
+        <div class="audit-content">
+          <div class="audit-title">Thêm FAQ Schema cho 12 bài viết "Hướng dẫn"</div>
+          <div class="audit-desc">Các bài viết có cấu trúc hỏi-đáp. Thêm FAQ schema sẽ hiện FAQ rich snippet trên Google, tăng CTR 20-30%.</div>
+        </div>
+        <button class="btn btn-ai btn-sm">AI tự động</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon" style="background:var(--brand-light);color:var(--brand);">&#10024;</div>
+        <div class="audit-content">
+          <div class="audit-title">Tối ưu SEO title với Power Words cho 156 sản phẩm</div>
+          <div class="audit-desc">AI phát hiện 156 title chỉ là tên sản phẩm đơn thuần. Thêm "Giá tốt", "Chính hãng", "Miễn phí ship" sẽ tăng CTR.</div>
+        </div>
+        <button class="btn btn-ai btn-sm">AI tối ưu</button>
+      </div>
+      <div class="audit-item">
+        <div class="audit-icon" style="background:var(--brand-light);color:var(--brand);">&#10024;</div>
+        <div class="audit-content">
+          <div class="audit-title">Tạo Breadcrumb Schema cho toàn bộ site</div>
+          <div class="audit-desc">Hiện chưa có BreadcrumbList schema. Thêm sẽ hiện breadcrumb trong SERP, tăng UX và CTR.</div>
+        </div>
+        <button class="btn btn-sm btn-secondary">Bật Breadcrumb</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 3. SỬA HÀNG LOẠT — Bulk Editor                                  -->
+<!-- ================================================================ -->
+<div class="page" id="p-bulk">
+  <div class="page-header">
+    <div>
+      <h1>Sửa hàng loạt <span class="badge badge-ai">AI Powered</span></h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Sửa hàng loạt</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary">Nhập CSV</button>
+      <button class="btn btn-secondary">Xuất CSV</button>
+      <button class="btn btn-primary">Lưu thay đổi</button>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active">Tất cả <span class="count">1.247</span></button>
+    <button class="tab-btn">Product <span class="count">523</span></button>
+    <button class="tab-btn">Bài viết <span class="count">384</span></button>
+    <button class="tab-btn">Trang tĩnh <span class="count">28</span></button>
+    <button class="tab-btn">Portfolio <span class="count">156</span></button>
+    <button class="tab-btn">Sự kiện <span class="count">156</span></button>
+  </div>
+
+  <div class="filter-bar">
+    <select><option>Trạng thái SEO</option><option>Đầy đủ</option><option>Thiếu meta</option><option>Chưa có SEO</option></select>
+    <select><option>Danh mục</option><option>Điện thoại</option><option>Phụ kiện</option><option>Laptop</option></select>
+    <select><option>Schema</option><option>Product</option><option>Article</option><option>Event</option></select>
+    <select><option>Sắp xếp: Mới nhất</option><option>Điểm SEO: Thấp → Cao</option><option>Điểm SEO: Cao → Thấp</option></select>
+    <input type="text" placeholder="Tìm kiếm..." style="margin-left:auto;">
+  </div>
+
+  <!-- Bulk Action Bar -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 14px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);">
+    <input type="checkbox" id="sel-all"><label for="sel-all" style="font-weight:600;font-size:12px;">Chọn tất cả trang này</label>
+    <span style="color:var(--text-2);font-size:12px;margin-left:4px;">3 đã chọn</span>
+    <div style="margin-left:auto;display:flex;gap:6px;">
+      <button class="btn btn-ai" onclick="go('ai-result')">AI sinh SEO (3 mục)</button>
+      <button class="btn btn-secondary btn-sm">Áp dụng template</button>
+      <button class="btn btn-secondary btn-sm">Đổi schema</button>
+      <button class="btn btn-danger btn-sm">Xóa dữ liệu SEO</button>
+    </div>
+  </div>
+
+  <div class="card" style="overflow-x:auto;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width:32px;text-align:center;"><input type="checkbox"></th>
+          <th style="width:36px;"></th>
+          <th style="width:50px;">Điểm</th>
+          <th>Tên / Loại</th>
+          <th style="width:230px;">SEO Title</th>
+          <th style="width:260px;">Meta Description</th>
+          <th style="width:100px;">Từ khóa</th>
+          <th style="width:70px;">Schema</th>
+          <th style="width:60px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;"><input type="checkbox" checked></td>
+          <td><div style="width:32px;height:32px;background:#f0f0f1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-2);">P</div></td>
+          <td><div style="width:36px;height:36px;border-radius:50%;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--brand);">92</div></td>
+          <td><strong>iPhone 15 Pro Max 256GB</strong><br><span style="font-size:11px;color:var(--text-2);">product &middot; Điện thoại &middot; 32.990.000đ</span></td>
+          <td><input class="inline-input" value="iPhone 15 Pro Max 256GB - Giá tốt nhất | ShopTech.vn"></td>
+          <td><input class="inline-input" value="Mua iPhone 15 Pro Max 256GB chính hãng. Chip A17 Pro, camera 48MP. Giao hàng miễn phí toàn quốc."></td>
+          <td><span class="kw-tag">iphone 15 pro max</span></td>
+          <td><span class="badge badge-green">Product</span></td>
+          <td><button class="btn btn-sm btn-secondary">...</button></td>
+        </tr>
+        <tr style="background:#fffdf5;">
+          <td style="text-align:center;"><input type="checkbox" checked></td>
+          <td><div style="width:32px;height:32px;background:#f0f0f1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-2);">P</div></td>
+          <td><div style="width:36px;height:36px;border-radius:50%;background:#fef3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--warning);">41</div></td>
+          <td><strong>Samsung Galaxy S24 Ultra</strong><br><span style="font-size:11px;color:var(--text-2);">product &middot; Điện thoại &middot; 28.990.000đ</span></td>
+          <td><input class="inline-input" value="Samsung Galaxy S24 Ultra" style="color:var(--warning);"></td>
+          <td><input class="inline-input" value="" placeholder="Chưa có meta description..." style="color:var(--warning);"></td>
+          <td style="color:var(--text-3);font-size:11px;font-style:italic;">chưa có</td>
+          <td><span class="badge badge-green">Product</span></td>
+          <td><button class="btn btn-sm btn-secondary">...</button></td>
+        </tr>
+        <tr style="background:#fff5f5;">
+          <td style="text-align:center;"><input type="checkbox" checked></td>
+          <td><div style="width:32px;height:32px;background:#f0f0f1;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-2);">P</div></td>
+          <td><div style="width:36px;height:36px;border-radius:50%;background:#fde8e8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--error);">0</div></td>
+          <td><strong>Tai nghe AirPods Pro 2</strong><br><span style="font-size:11px;color:var(--text-2);">product &middot; Phụ kiện &middot; 5.990.000đ</span></td>
+          <td><input class="inline-input" value="" placeholder="Chưa có..." style="color:var(--error);"></td>
+          <td><input class="inline-input" value="" placeholder="Chưa có..." style="color:var(--error);"></td>
+          <td style="color:var(--text-3);font-size:11px;font-style:italic;">chưa có</td>
+          <td><span class="badge badge-green">Product</span></td>
+          <td><button class="btn btn-sm btn-secondary">...</button></td>
+        </tr>
+        <tr>
+          <td style="text-align:center;"><input type="checkbox"></td>
+          <td><div style="width:32px;height:32px;background:#e8f0fe;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--wp-blue);">B</div></td>
+          <td><div style="width:36px;height:36px;border-radius:50%;background:var(--brand-light);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--brand);">87</div></td>
+          <td><strong>Hướng dẫn chọn điện thoại 2024</strong><br><span style="font-size:11px;color:var(--text-2);">post &middot; Hướng dẫn</span></td>
+          <td><input class="inline-input" value="Top 10 điện thoại đáng mua nhất 2024 | ShopTech Blog"></td>
+          <td><input class="inline-input" value="Tổng hợp 10 mẫu điện thoại tốt nhất 2024, so sánh chi tiết."></td>
+          <td><span class="kw-tag">điện thoại 2024</span></td>
+          <td><span class="badge badge-blue">Article</span></td>
+          <td><button class="btn btn-sm btn-secondary">...</button></td>
+        </tr>
+        <tr style="background:#fffdf5;">
+          <td style="text-align:center;"><input type="checkbox"></td>
+          <td><div style="width:32px;height:32px;background:var(--brand-light);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--brand);">E</div></td>
+          <td><div style="width:36px;height:36px;border-radius:50%;background:#fef3e0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--warning);">35</div></td>
+          <td><strong>Tech Summit Vietnam 2026</strong><br><span style="font-size:11px;color:var(--text-2);">event &middot; Hội nghị &middot; 20/06/2026</span></td>
+          <td><input class="inline-input" value="" placeholder="Chưa có..." style="color:var(--warning);"></td>
+          <td><input class="inline-input" value="" placeholder="Chưa có..." style="color:var(--warning);"></td>
+          <td style="color:var(--text-3);font-size:11px;font-style:italic;">chưa có</td>
+          <td><span class="badge badge-blue">Event</span></td>
+          <td><button class="btn btn-sm btn-secondary">...</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--text-2);">
+    <span>1-20 / 1.247</span>
+    <div style="display:flex;gap:4px;">
+      <button class="btn btn-sm btn-secondary" disabled>&laquo;</button>
+      <button class="btn btn-sm btn-primary">1</button>
+      <button class="btn btn-sm btn-secondary">2</button>
+      <button class="btn btn-sm btn-secondary">3</button>
+      <button class="btn btn-sm btn-secondary">...</button>
+      <button class="btn btn-sm btn-secondary">63</button>
+      <button class="btn btn-sm btn-secondary">&raquo;</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 4. KẾT QUẢ AI — Preview trước khi áp dụng                       -->
+<!-- ================================================================ -->
+<div class="page" id="p-ai-result">
+  <div class="page-header">
+    <div>
+      <h1>Kết quả AI SEO <span class="badge badge-ai">Gemini 2.0 Flash</span></h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Xem trước kết quả AI</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary" onclick="go('bulk')">Quay lại</button>
+      <button class="btn btn-primary btn-lg">Áp dụng tất cả (3 mục)</button>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-body" style="padding:14px 18px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <strong style="font-size:14px;">AI đang sinh SEO...</strong>
+        <span style="font-size:12px;color:var(--text-2);">2/3 hoàn thành — 8 giây</span>
+      </div>
+      <div class="progress progress-lg"><div class="progress-fill brand" style="width:66%;">66%</div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--text-3);">
+        <span>Model: Gemini 2.0 Flash</span>
+        <span>Nguồn: GenSeo Server</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result 1: Samsung -->
+  <div class="card" style="margin-bottom:14px;border-left:3px solid var(--brand);">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:#f0f0f1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">P</div>
+        <div>
+          <strong>Samsung Galaxy S24 Ultra</strong>
+          <div style="font-size:11px;color:var(--text-2);">product &middot; Điện thoại &middot; 28.990.000đ</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-primary btn-sm">Áp dụng</button>
+        <button class="btn btn-secondary btn-sm">Chỉnh sửa</button>
+        <button class="btn btn-sm" style="border:none;color:var(--text-3);">Bỏ qua</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;font-weight:600;color:var(--text-3);margin-bottom:6px;">Hiện tại</div>
+          <div style="padding:12px;background:#f9f9f9;border-radius:var(--radius);border-left:3px solid #ddd;">
+            <div style="font-size:11px;color:#999;margin-bottom:2px;">SEO Title:</div>
+            <div style="font-size:13px;color:#999;font-style:italic;">Samsung Galaxy S24 Ultra (chưa tối ưu)</div>
+            <div style="font-size:11px;color:#999;margin-top:8px;margin-bottom:2px;">Meta Description:</div>
+            <div style="font-size:13px;color:var(--error);font-style:italic;">Chưa có</div>
+            <div style="font-size:11px;color:#999;margin-top:8px;margin-bottom:2px;">Điểm:</div>
+            <div style="font-size:16px;font-weight:800;color:var(--error);">0 / 100</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;font-weight:600;color:var(--brand);margin-bottom:6px;">AI sinh</div>
+          <div style="padding:12px;background:var(--brand-light);border-radius:var(--radius);border-left:3px solid var(--brand);">
+            <div style="font-size:11px;color:var(--brand-dark);margin-bottom:2px;">SEO Title: <span style="float:right;color:var(--brand);">58 ký tự — Tốt</span></div>
+            <div style="font-size:13px;font-weight:600;color:var(--text-1);">Samsung Galaxy S24 Ultra - Giá tốt, Trả góp 0% | ShopTech</div>
+            <div style="font-size:11px;color:var(--brand-dark);margin-top:8px;margin-bottom:2px;">Meta Description: <span style="float:right;color:var(--brand);">148 ký tự — Tốt</span></div>
+            <div style="font-size:13px;color:var(--text-1);">Mua Samsung Galaxy S24 Ultra chính hãng. Chip Snapdragon 8 Gen 3, bút S tích hợp, camera 200MP. Bảo hành 24 tháng, giao hàng miễn phí toàn quốc.</div>
+            <div style="font-size:11px;color:var(--brand-dark);margin-top:8px;margin-bottom:2px;">Từ khóa chính:</div>
+            <div><span class="kw-tag">samsung galaxy s24 ultra</span></div>
+            <div style="font-size:11px;color:var(--brand-dark);margin-top:8px;margin-bottom:2px;">Điểm dự kiến:</div>
+            <div style="font-size:16px;font-weight:800;color:var(--brand);">92 / 100 <span style="font-size:12px;font-weight:400;color:var(--success);">(+92)</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- SERP Preview -->
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;text-transform:uppercase;font-weight:600;color:var(--text-3);margin-bottom:6px;">Xem trước SERP</div>
+        <div class="serp">
+          <div class="serp-url"><span class="fav">S</span>shoptech.vn > sản phẩm > samsung-galaxy-s24-ultra</div>
+          <div class="serp-t">Samsung Galaxy S24 Ultra - Giá tốt, Trả góp 0% | ShopTech</div>
+          <div class="serp-d">Mua Samsung Galaxy S24 Ultra chính hãng. Chip Snapdragon 8 Gen 3, bút S tích hợp, camera 200MP. Bảo hành 24 tháng, giao hàng miễn phí toàn quốc.</div>
+          <div class="serp-rich"><span class="serp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.8 (127) &middot; <span class="serp-price">28.990.000đ</span> &middot; Còn hàng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result 2: AirPods -->
+  <div class="card" style="margin-bottom:14px;border-left:3px solid var(--brand);">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:#f0f0f1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;">P</div>
+        <div>
+          <strong>Tai nghe AirPods Pro 2</strong>
+          <div style="font-size:11px;color:var(--text-2);">product &middot; Phụ kiện &middot; 5.990.000đ</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-primary btn-sm">Áp dụng</button>
+        <button class="btn btn-secondary btn-sm">Chỉnh sửa</button>
+        <button class="btn btn-sm" style="border:none;color:var(--text-3);">Bỏ qua</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;font-weight:600;color:var(--text-3);margin-bottom:6px;">Hiện tại</div>
+          <div style="padding:12px;background:#f9f9f9;border-radius:var(--radius);border-left:3px solid #ddd;font-size:13px;color:#999;">Chưa có dữ liệu SEO</div>
+        </div>
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;font-weight:600;color:var(--brand);margin-bottom:6px;">AI sinh</div>
+          <div style="padding:12px;background:var(--brand-light);border-radius:var(--radius);border-left:3px solid var(--brand);">
+            <div style="font-size:11px;color:var(--brand-dark);margin-bottom:2px;">SEO Title:</div>
+            <div style="font-size:13px;font-weight:600;">Tai nghe Apple AirPods Pro 2 - Chống ồn ANC | ShopTech</div>
+            <div style="font-size:11px;color:var(--brand-dark);margin-top:8px;margin-bottom:2px;">Meta Description:</div>
+            <div style="font-size:13px;">AirPods Pro 2 chính hãng Apple. Chống ồn chủ động ANC, Adaptive Audio, USB-C. Dolby Atmos. Bảo hành 12 tháng Apple Vietnam.</div>
+            <div style="font-size:11px;color:var(--brand-dark);margin-top:8px;">Điểm dự kiến: <strong style="color:var(--brand);">88/100</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result 3: Loading -->
+  <div class="card loading" style="margin-bottom:14px;border-left:3px solid #e0e0e0;">
+    <div class="card-body" style="padding:18px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;background:var(--brand-light);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--brand);">E</div>
+        <div>
+          <strong>Tech Summit Vietnam 2026</strong>
+          <div style="font-size:11px;color:var(--text-2);">event &middot; Hội nghị</div>
+        </div>
+        <span style="margin-left:auto;color:var(--text-3);font-size:12px;">Đang sinh SEO...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 5. TỪ KHÓA & LIÊN KẾT NỘI BỘ — AI Gợi ý                       -->
+<!-- ================================================================ -->
+<div class="page" id="p-keywords">
+  <div class="page-header">
+    <div>
+      <h1>Từ khóa & Liên kết nội bộ <span class="badge badge-ai">AI Powered</span></h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Từ khóa & Liên kết</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ai">Quét lại toàn site</button>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px;">
+    <!-- Keyword Cannibalization -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Phát hiện Keyword Cannibalization</h3>
+        <span class="badge badge-amber">28 vấn đề</span>
+      </div>
+      <div class="card-body" style="padding:10px 14px;">
+        <div style="padding:10px 12px;background:#fef3e0;border-radius:var(--radius);margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:#92600a;margin-bottom:6px;">Từ khóa: "samsung galaxy s24 ultra" — 3 trang cạnh tranh</div>
+          <div style="font-size:11px;color:var(--text-2);padding-left:10px;border-left:2px solid #f0d060;">
+            <div style="padding:3px 0;">1. /san-pham/samsung-galaxy-s24-ultra/ <span class="badge badge-green" style="font-size:9px;">Chính</span></div>
+            <div style="padding:3px 0;">2. /huong-dan-chon-dien-thoai-2024/ <span class="badge badge-amber" style="font-size:9px;">Cạnh tranh</span></div>
+            <div style="padding:3px 0;">3. /so-sanh-samsung-vs-iphone/ <span class="badge badge-amber" style="font-size:9px;">Cạnh tranh</span></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--brand-dark);">Gợi ý AI: Đổi từ khóa trang 2 thành "hướng dẫn chọn điện thoại", trang 3 thành "so sánh samsung iphone"</div>
+        </div>
+        <div style="padding:10px 12px;background:#fef3e0;border-radius:var(--radius);margin-bottom:6px;">
+          <div style="font-size:12px;font-weight:600;color:#92600a;margin-bottom:4px;">Từ khóa: "airpods pro" — 2 trang</div>
+          <div style="font-size:11px;color:var(--text-2);padding-left:10px;border-left:2px solid #f0d060;">
+            <div style="padding:3px 0;">1. /san-pham/airpods-pro-2/ <span class="badge badge-green" style="font-size:9px;">Chính</span></div>
+            <div style="padding:3px 0;">2. /review-airpods-pro-2-chi-tiet/ <span class="badge badge-amber" style="font-size:9px;">Cạnh tranh</span></div>
+          </div>
+        </div>
+        <div style="text-align:center;padding:8px;font-size:12px;color:var(--text-2);">... 26 nhóm khác</div>
+      </div>
+    </div>
+
+    <!-- Missing Keywords -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Từ khóa chính còn thiếu</h3>
+        <span class="badge badge-red">203 trang</span>
+      </div>
+      <div class="card-body" style="padding:10px 14px;">
+        <p style="font-size:12px;color:var(--text-2);margin-bottom:10px;">AI gợi ý từ khóa dựa trên nội dung, danh mục và giá:</p>
+        <table class="data-table">
+          <thead><tr><th>Trang</th><th>Từ khóa gợi ý</th><th></th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="font-size:12px;">Samsung Galaxy S24 Ultra</td>
+              <td><span class="kw-tag">samsung galaxy s24 ultra <span class="vol">12K/tháng</span></span></td>
+              <td><button class="btn btn-sm btn-primary">Áp dụng</button></td>
+            </tr>
+            <tr>
+              <td style="font-size:12px;">Tai nghe AirPods Pro 2</td>
+              <td><span class="kw-tag">airpods pro 2 <span class="vol">8,1K/tháng</span></span></td>
+              <td><button class="btn btn-sm btn-primary">Áp dụng</button></td>
+            </tr>
+            <tr>
+              <td style="font-size:12px;">MacBook Pro M3 14 inch</td>
+              <td><span class="kw-tag">macbook pro m3 <span class="vol">5,4K/tháng</span></span></td>
+              <td><button class="btn btn-sm btn-primary">Áp dụng</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align:center;margin-top:8px;"><button class="btn btn-ai btn-sm">AI gán từ khóa cho tất cả 203 trang</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Internal Link Opportunities -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Cơ hội liên kết nội bộ — AI phát hiện</h3>
+      <div style="display:flex;gap:6px;">
+        <span class="badge badge-green">234 cơ hội</span>
+        <button class="btn btn-ai btn-sm">AI thêm link tự động</button>
+      </div>
+    </div>
+    <div class="card-body" style="padding:10px 14px;">
+      <p style="font-size:12px;color:var(--text-2);margin-bottom:12px;">AI phân tích nội dung và tìm các cơ hội liên kết nội bộ giúp tăng phân phối sức mạnh SEO.</p>
+      <div class="link-suggest">
+        <div class="ls-score">95</div>
+        <div class="ls-content">
+          <div class="ls-title">Bài "Hướng dẫn chọn điện thoại 2024" → Sản phẩm "iPhone 15 Pro Max"</div>
+          <div class="ls-url">Anchor text gợi ý: "iPhone 15 Pro Max 256GB"</div>
+          <div class="ls-reason">Lý do: Bài viết đề cập đến iPhone 15 Pro Max nhưng chưa link đến trang sản phẩm</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Thêm link</button>
+      </div>
+      <div class="link-suggest">
+        <div class="ls-score">88</div>
+        <div class="ls-content">
+          <div class="ls-title">Sản phẩm "Galaxy S24 Ultra" → Bài "So sánh Samsung vs iPhone"</div>
+          <div class="ls-url">Anchor text gợi ý: "so sánh với iPhone 15 Pro Max"</div>
+          <div class="ls-reason">Lý do: Tăng liên kết giữa sản phẩm và nội dung biên tập</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Thêm link</button>
+      </div>
+      <div class="link-suggest">
+        <div class="ls-score">82</div>
+        <div class="ls-content">
+          <div class="ls-title">Bài "Review AirPods Pro 2" → Sản phẩm "AirPods Pro 2"</div>
+          <div class="ls-url">Anchor text gợi ý: "mua AirPods Pro 2 chính hãng"</div>
+          <div class="ls-reason">Lý do: Bài review chưa có link mua hàng</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Thêm link</button>
+      </div>
+      <div class="link-suggest">
+        <div class="ls-score">76</div>
+        <div class="ls-content">
+          <div class="ls-title">Trang "Tech Summit 2026" → Bài "Xu hướng công nghệ 2026"</div>
+          <div class="ls-url">Anchor text gợi ý: "xu hướng công nghệ 2026"</div>
+          <div class="ls-reason">Lý do: Cùng chủ đề công nghệ, tăng topic authority</div>
+        </div>
+        <button class="btn btn-primary btn-sm">Thêm link</button>
+      </div>
+      <div style="text-align:center;padding:10px;"><button class="btn btn-secondary">Xem tất cả 234 cơ hội</button></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 6. META BOX — Trong Post/Product Editor                          -->
+<!-- ================================================================ -->
+<div class="page" id="p-metabox">
+  <div class="page-header">
+    <div>
+      <h1>Meta Box — Trong trình soạn thảo</h1>
+      <div class="breadcrumb">Mô phỏng giao diện khi chỉnh sửa nội dung</div>
+    </div>
+  </div>
+
+  <div class="grid-sidebar">
+    <!-- Left: WooCommerce Product Data Tab -->
+    <div>
+      <div style="background:var(--white);border:1px solid var(--border);border-left:4px solid var(--info);padding:14px 18px;margin-bottom:14px;border-radius:0 var(--radius) var(--radius) 0;">
+        <strong>Mô phỏng:</strong> Tab "GenSeo SEO" trong WooCommerce Product Data Panel. Đây là nơi người dùng chỉnh sửa SEO cho từng sản phẩm.
+      </div>
+
+      <div class="card">
+        <div style="display:grid;grid-template-columns:160px 1fr;">
+          <!-- WC Tab Nav -->
+          <div style="border-right:1px solid var(--border);background:var(--bg);">
+            <a href="#" style="display:block;padding:10px 14px;font-size:12px;text-decoration:none;color:var(--text-2);border-bottom:1px solid var(--border);">Tổng quan</a>
+            <a href="#" style="display:block;padding:10px 14px;font-size:12px;text-decoration:none;color:var(--text-2);border-bottom:1px solid var(--border);">Kho hàng</a>
+            <a href="#" style="display:block;padding:10px 14px;font-size:12px;text-decoration:none;color:var(--text-2);border-bottom:1px solid var(--border);">Vận chuyển</a>
+            <a href="#" style="display:block;padding:10px 14px;font-size:12px;text-decoration:none;color:var(--text-1);border-bottom:1px solid var(--border);background:var(--white);border-left:3px solid var(--brand);font-weight:600;">GenSeo SEO</a>
+            <a href="#" style="display:block;padding:10px 14px;font-size:12px;text-decoration:none;color:var(--text-2);">Thuộc tính</a>
+          </div>
+          <!-- Content -->
+          <div style="padding:18px;">
+            <div style="display:flex;gap:6px;margin-bottom:16px;">
+              <button class="btn btn-ai btn-lg" style="flex:1;justify-content:center;">AI sinh đầy đủ SEO</button>
+              <button class="btn btn-secondary">Xem JSON-LD</button>
+            </div>
+
+            <!-- Schema Type -->
+            <div class="mf">
+              <label>Loại Schema</label>
+              <div class="schema-grid">
+                <div class="schema-opt active"><span class="s-icon">&#128722;</span><span class="s-label">Product</span><span class="s-auto">Tự động</span></div>
+                <div class="schema-opt"><span class="s-icon">&#128196;</span><span class="s-label">Article</span></div>
+                <div class="schema-opt"><span class="s-icon">&#10068;</span><span class="s-label">FAQ</span></div>
+                <div class="schema-opt"><span class="s-icon">&#128295;</span><span class="s-label">HowTo</span></div>
+                <div class="schema-opt"><span class="s-icon">&#127860;</span><span class="s-label">Recipe</span></div>
+                <div class="schema-opt"><span class="s-icon">&#127881;</span><span class="s-label">Event</span></div>
+                <div class="schema-opt"><span class="s-icon">+</span><span class="s-label">Khác</span></div>
+              </div>
+            </div>
+
+            <!-- SEO Title -->
+            <div class="mf">
+              <label>SEO Title <button class="ai-btn">AI sinh</button></label>
+              <input type="text" value="Samsung Galaxy S24 Ultra - Giá tốt, Trả góp 0% | ShopTech">
+              <div class="char ok">58/60 ký tự — Tốt</div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="mf">
+              <label>Meta Description <button class="ai-btn">AI sinh</button></label>
+              <textarea>Mua Samsung Galaxy S24 Ultra chính hãng. Chip Snapdragon 8 Gen 3, bút S tích hợp, camera 200MP. Bảo hành 24 tháng, giao hàng miễn phí.</textarea>
+              <div class="char ok">146/160 ký tự — Tốt</div>
+            </div>
+
+            <!-- Focus KW -->
+            <div class="mf">
+              <label>Từ khóa chính <button class="ai-btn">AI gợi ý</button></label>
+              <input type="text" value="samsung galaxy s24 ultra">
+              <div class="kw-tags" style="margin-top:6px;">
+                <span class="kw-tag">samsung galaxy s24 ultra <span class="vol">12K/tháng</span></span>
+                <span class="kw-tag">galaxy s24 ultra giá <span class="vol">4,2K/tháng</span></span>
+              </div>
+            </div>
+
+            <!-- Secondary KW -->
+            <div class="mf">
+              <label>Từ khóa phụ</label>
+              <input type="text" value="galaxy s24 ultra, samsung s24 ultra giá, s24 ultra chính hãng">
+            </div>
+
+            <!-- Product-specific -->
+            <div style="border-top:1px solid #eee;padding-top:14px;margin-top:14px;">
+              <div style="font-size:12px;font-weight:600;color:var(--brand-dark);margin-bottom:10px;">Thông tin Schema Product</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div class="mf"><label>Thương hiệu</label><input type="text" value="Samsung"></div>
+                <div class="mf"><label>GTIN</label><input type="text" value="8806095073040"></div>
+                <div class="mf"><label>MPN</label><input type="text" value="SM-S928BZKD"></div>
+                <div class="mf"><label>Tình trạng</label><select style="width:100%;padding:6px;border:1px solid var(--border);border-radius:var(--radius);"><option selected>Mới (NewCondition)</option><option>Đã qua sử dụng</option><option>Tân trang</option></select></div>
+              </div>
+            </div>
+
+            <!-- OG Image -->
+            <div class="mf" style="margin-top:14px;">
+              <label>Ảnh OpenGraph</label>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:80px;height:80px;border:1px solid var(--border);border-radius:var(--radius);background:#f0f0f1;display:flex;align-items:center;justify-content:center;color:#999;font-size:10px;">1200x630</div>
+                <div>
+                  <button class="btn btn-secondary btn-sm" style="margin-bottom:4px;">Chọn ảnh</button><br>
+                  <span style="font-size:11px;color:var(--text-3);">Khuyến nghị 1200x630px</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SERP Preview -->
+            <div style="border-top:1px solid #eee;padding-top:14px;margin-top:14px;">
+              <label style="font-weight:600;font-size:12px;margin-bottom:8px;display:block;">Xem trước SERP</label>
+              <div class="serp">
+                <div class="serp-url"><span class="fav">S</span>shoptech.vn > sản phẩm > samsung-galaxy-s24-ultra</div>
+                <div class="serp-t">Samsung Galaxy S24 Ultra - Giá tốt, Trả góp 0% | ShopTech</div>
+                <div class="serp-d">Mua Samsung Galaxy S24 Ultra chính hãng. Chip Snapdragon 8 Gen 3, bút S tích hợp, camera 200MP. Bảo hành 24 tháng, giao hàng miễn phí.</div>
+                <div class="serp-rich"><span class="serp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4.8 (127) &middot; <span class="serp-price">28.990.000đ</span> &middot; Còn hàng</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Sidebar Widgets -->
+    <div>
+      <div style="background:var(--white);border:1px solid var(--border);border-left:4px solid var(--info);padding:14px 18px;margin-bottom:14px;border-radius:0 var(--radius) var(--radius) 0;">
+        <strong>Mô phỏng:</strong> Các widget sidebar trong trình soạn thảo.
+      </div>
+
+      <!-- SEO Score Widget -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-header">
+          <h3>Điểm SEO</h3>
+          <span class="badge badge-premium" style="font-size:10px;">PREMIUM</span>
+        </div>
+        <div class="card-body" style="text-align:center;">
+          <div class="donut-chart" style="width:100px;height:100px;margin:0 auto 10px;">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#e8e8e8" stroke-width="8"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="var(--brand)" stroke-width="8" stroke-dasharray="238.8" stroke-dashoffset="19.1" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="donut-center">
+              <div style="font-size:24px;font-weight:800;color:var(--brand);">92</div>
+            </div>
+          </div>
+
+          <div style="text-align:left;">
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>Từ khóa chính có trong title
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>Từ khóa chính có trong meta desc
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>SEO title độ dài tốt (58/60)
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>Meta desc độ dài tốt (146/160)
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>Product Schema đầy đủ
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>OG Tags cấu hình đúng
+            </div>
+            <div style="padding:5px 8px;background:var(--brand-light);border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--brand);font-weight:700;">&#10003;</span>Có GTIN và Brand
+            </div>
+            <div style="padding:5px 8px;background:#fef3e0;border-radius:4px;margin-bottom:4px;font-size:11px;display:flex;align-items:center;gap:6px;">
+              <span style="color:var(--warning);font-weight:700;">!</span>Thiếu liên kết nội bộ (2 gợi ý)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Analysis Widget -->
+      <div class="card" style="margin-bottom:14px;">
+        <div class="card-header"><h3>Phân tích nội dung</h3><span class="badge badge-ai" style="font-size:9px;">AI</span></div>
+        <div class="card-body" style="padding:12px;">
+          <div class="analysis-meter">
+            <span class="meter-label">Dễ đọc</span>
+            <div class="meter-bar"><div class="meter-fill" style="width:85%;background:var(--brand);"></div></div>
+            <span class="meter-val" style="color:var(--brand);">Tốt</span>
+          </div>
+          <div class="analysis-meter">
+            <span class="meter-label">Mật độ từ khóa</span>
+            <div class="meter-bar"><div class="meter-fill" style="width:60%;background:var(--brand);"></div></div>
+            <span class="meter-val" style="color:var(--brand);">2,1%</span>
+          </div>
+          <div class="analysis-meter">
+            <span class="meter-label">Cấu trúc heading</span>
+            <div class="meter-bar"><div class="meter-fill" style="width:78%;background:var(--brand);"></div></div>
+            <span class="meter-val" style="color:var(--brand);">Tốt</span>
+          </div>
+          <div class="analysis-meter">
+            <span class="meter-label">Liên kết nội bộ</span>
+            <div class="meter-bar"><div class="meter-fill" style="width:30%;background:var(--warning);"></div></div>
+            <span class="meter-val" style="color:var(--warning);">1</span>
+          </div>
+          <div class="analysis-meter">
+            <span class="meter-label">Alt text ảnh</span>
+            <div class="meter-bar"><div class="meter-fill" style="width:90%;background:var(--brand);"></div></div>
+            <span class="meter-val" style="color:var(--brand);">9/10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Internal Link Suggestions -->
+      <div class="card">
+        <div class="card-header"><h3>Gợi ý liên kết</h3><span class="badge badge-ai" style="font-size:9px;">AI</span></div>
+        <div class="card-body" style="padding:10px;">
+          <div style="padding:8px;background:var(--brand-light);border-radius:var(--radius);margin-bottom:6px;font-size:11px;">
+            <div style="font-weight:600;margin-bottom:2px;">&#8594; "Hướng dẫn chọn điện thoại 2024"</div>
+            <div style="color:var(--text-2);">Anchor: "so sánh với các dòng điện thoại khác"</div>
+            <button class="btn btn-sm btn-primary" style="margin-top:4px;font-size:10px;">Chèn link</button>
+          </div>
+          <div style="padding:8px;background:var(--brand-light);border-radius:var(--radius);margin-bottom:6px;font-size:11px;">
+            <div style="font-weight:600;margin-bottom:2px;">&#8594; "Phụ kiện Samsung chính hãng"</div>
+            <div style="color:var(--text-2);">Anchor: "phụ kiện Samsung Galaxy"</div>
+            <button class="btn btn-sm btn-primary" style="margin-top:4px;font-size:10px;">Chèn link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 7. CÀI ĐẶT                                                      -->
+<!-- ================================================================ -->
+<div class="page" id="p-settings">
+  <div class="page-header">
+    <div>
+      <h1>Cài đặt</h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Cài đặt</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary">Lưu thay đổi</button>
+    </div>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active">Tổng quát</button>
+    <button class="tab-btn">Schema</button>
+    <button class="tab-btn">AI & BYOK</button>
+    <button class="tab-btn">Kiểm tra</button>
+    <button class="tab-btn">Đồng bộ</button>
+    <button class="tab-btn">Nâng cao</button>
+  </div>
+
+  <!-- Post Type Support -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header"><h3>Loại nội dung được hỗ trợ</h3></div>
+    <div class="card-body">
+      <p style="font-size:12px;color:var(--text-2);margin-bottom:12px;">Chọn loại nội dung mà GenSeo sẽ quản lý SEO (schema + OG + meta box + audit).</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);cursor:pointer;border:1px solid transparent;">
+          <input type="checkbox" checked disabled><div><strong style="font-size:13px;">post</strong> — Bài viết<br><span style="font-size:11px;color:var(--text-2);">Schema: Article/HowTo/FAQ</span></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);cursor:pointer;border:1px solid transparent;">
+          <input type="checkbox" checked disabled><div><strong style="font-size:13px;">page</strong> — Trang tĩnh<br><span style="font-size:11px;color:var(--text-2);">Schema: WebPage</span></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--brand-light);border-radius:var(--radius);cursor:pointer;border:1px solid #b0dac8;">
+          <input type="checkbox" checked><div><strong style="font-size:13px;">product</strong> — Sản phẩm <span class="badge badge-blue" style="font-size:9px;">WooCommerce</span><br><span style="font-size:11px;color:var(--text-2);">Schema: Product (không cần cấu hình)</span></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);cursor:pointer;border:1px solid transparent;">
+          <input type="checkbox" checked><div><strong style="font-size:13px;">portfolio</strong> <span class="badge badge-blue" style="font-size:9px;">CPT</span><br><span style="font-size:11px;color:var(--text-2);">Schema: CreativeWork</span></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);cursor:pointer;border:1px solid transparent;">
+          <input type="checkbox" checked><div><strong style="font-size:13px;">event</strong> <span class="badge badge-blue" style="font-size:9px;">CPT</span><br><span style="font-size:11px;color:var(--text-2);">Schema: Event</span></div>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--bg);border-radius:var(--radius);cursor:pointer;border:1px solid transparent;">
+          <input type="checkbox"><div><strong style="font-size:13px;">download</strong> <span class="badge badge-blue" style="font-size:9px;">EDD</span><br><span style="font-size:11px;color:var(--text-2);">Schema: SoftwareApp</span></div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI & BYOK -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-header"><h3>AI & BYOK</h3><span class="badge badge-ai" style="font-size:10px;">AI</span></div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div class="mf">
+          <label>Nhà cung cấp AI</label>
+          <select style="width:100%;padding:8px;border:1px solid var(--border);border-radius:var(--radius);">
+            <option selected>GenSeo Server (mặc định)</option>
+            <option>BYOK — Google Gemini</option>
+            <option>BYOK — OpenAI GPT</option>
+            <option>BYOK — Anthropic Claude</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Model AI</label>
+          <select style="width:100%;padding:8px;border:1px solid var(--border);border-radius:var(--radius);">
+            <option selected>gemini-2.0-flash (nhanh)</option>
+            <option>gemini-2.0-pro (chất lượng)</option>
+            <option>gpt-4o-mini</option>
+            <option>gpt-4o</option>
+          </select>
+        </div>
+      </div>
+      <div class="mf" style="margin-top:10px;">
+        <label>Mẫu prompt AI</label>
+        <textarea style="width:100%;height:80px;padding:8px;border:1px solid var(--border);border-radius:var(--radius);font-family:monospace;font-size:12px;">Viết SEO title (tối đa 60 ký tự) và meta description (120-160 ký tự) cho {content_type} "{title}" danh mục "{category}". {price_info}. Viết bằng tiếng Việt có dấu, thuyết phục người đọc click.</textarea>
+        <div style="font-size:11px;color:var(--text-2);margin-top:4px;">Biến: {title}, {content_type}, {category}, {price_info}, {brand}, {sku}, {short_description}, {site_name}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sync -->
+  <div class="card">
+    <div class="card-header"><h3>Đồng bộ SEO Plugin</h3></div>
+    <div class="card-body">
+      <div style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--brand-light);border-radius:var(--radius);margin-bottom:12px;">
+        <span style="color:var(--brand);font-weight:700;">&#9432;</span>
+        <span style="font-size:12px;">Phát hiện: <strong>Rank Math SEO</strong> đang hoạt động.</span>
+      </div>
+      <div class="mf">
+        <label>Quản lý Schema</label>
+        <select style="width:100%;padding:8px;border:1px solid var(--border);border-radius:var(--radius);">
+          <option>GenSeo SEO Copilot (khuyến nghị)</option>
+          <option selected>Rank Math (giữ nguyên)</option>
+        </select>
+        <span style="font-size:11px;color:var(--text-2);">Nên dùng 1 plugin xuất JSON-LD để tránh trùng lặp.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================================ -->
+<!-- 8. GIẤY PHÉP                                                     -->
+<!-- ================================================================ -->
+<div class="page" id="p-license">
+  <div class="page-header">
+    <div>
+      <h1>Giấy phép</h1>
+      <div class="breadcrumb">GenSeo SEO Copilot / Giấy phép</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:20px;">
+    <button class="btn btn-secondary" onclick="toggleLic()" id="lic-toggle">Xem trạng thái: Đã kích hoạt</button>
+  </div>
+
+  <!-- CHƯA KÍCH HOẠT -->
+  <div id="lic-off">
+    <div class="card" style="max-width:500px;margin:0 auto 20px;text-align:center;">
+      <div class="card-body" style="padding:30px;">
+        <div style="font-size:28px;margin-bottom:8px;">&#128273;</div>
+        <h2 style="font-size:20px;margin-bottom:6px;">Kích hoạt License Premium</h2>
+        <p style="color:var(--text-2);margin-bottom:16px;">Mở khóa tất cả tính năng cho domain này.</p>
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <input type="text" placeholder="XXXX-XXXX-XXXX-XXXX" style="flex:1;padding:10px 14px;border:2px solid var(--border);border-radius:6px;font-size:14px;font-family:monospace;letter-spacing:1px;text-align:center;">
+          <button class="btn btn-primary btn-lg">Kích hoạt</button>
+        </div>
+        <p style="font-size:11px;color:var(--text-3);">1 license = 1 domain. Nhận key qua email sau khi mua.</p>
+      </div>
+    </div>
+
+    <!-- Dùng thử -->
+    <div class="card" style="max-width:500px;margin:0 auto 20px;border-left:4px solid var(--warning);">
+      <div class="card-body" style="padding:18px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:13px;font-weight:600;">Dùng thử miễn phí</div>
+            <div style="font-size:12px;color:var(--text-2);">Đã dùng 3/10 lượt AI sinh</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:32px;font-weight:800;color:var(--warning);">7</div>
+            <div style="font-size:10px;color:var(--text-3);">CÒN LẠI</div>
+          </div>
+        </div>
+        <div class="progress" style="margin-top:8px;"><div class="progress-fill amber" style="width:30%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Bảng giá -->
+    <h2 style="text-align:center;margin:28px 0 6px;font-size:20px;">Chọn gói Premium</h2>
+    <p style="text-align:center;color:var(--text-2);margin-bottom:20px;font-size:13px;">MIỄN PHÍ = Schema + OG + Meta Box + 10 lượt AI. Premium = Không giới hạn.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:800px;margin:0 auto;">
+      <div class="card" style="text-align:center;padding:24px 20px;border:2px solid var(--border);transition:all .2s;">
+        <div style="font-size:14px;font-weight:600;">3 tháng</div>
+        <div style="font-size:32px;font-weight:800;color:var(--brand);margin:8px 0 2px;">149K</div>
+        <div style="font-size:12px;color:var(--text-2);margin-bottom:16px;">~50K/tháng</div>
+        <div style="text-align:left;font-size:12px;color:var(--text-2);margin-bottom:16px;">
+          <div style="padding:3px 0;">&#10003; AI sinh hàng loạt không giới hạn</div>
+          <div style="padding:3px 0;">&#10003; Kiểm tra SEO toàn site</div>
+          <div style="padding:3px 0;">&#10003; Phân tích từ khóa</div>
+          <div style="padding:3px 0;">&#10003; Liên kết nội bộ AI</div>
+          <div style="padding:3px 0;">&#10003; BYOK</div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;justify-content:center;">Mua ngay</button>
+      </div>
+      <div class="card" style="text-align:center;padding:24px 20px;border:2px solid var(--brand);box-shadow:0 4px 16px var(--brand-glow);position:relative;">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-size:11px;font-weight:600;padding:2px 14px;border-radius:10px;">Phổ biến</div>
+        <div style="font-size:14px;font-weight:600;">6 tháng</div>
+        <div style="font-size:32px;font-weight:800;color:var(--brand);margin:8px 0 2px;">249K</div>
+        <div style="font-size:12px;color:var(--text-2);margin-bottom:16px;">~42K/tháng — Tiết kiệm 16%</div>
+        <div style="text-align:left;font-size:12px;color:var(--text-2);margin-bottom:16px;">
+          <div style="padding:3px 0;">&#10003; Tất cả tính năng gói 3 tháng</div>
+          <div style="padding:3px 0;">&#10003; Breadcrumb Schema</div>
+          <div style="padding:3px 0;">&#10003; Xuất/Nhập CSV</div>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Mua ngay</button>
+      </div>
+      <div class="card" style="text-align:center;padding:24px 20px;border:2px solid var(--border);">
+        <div style="font-size:14px;font-weight:600;">1 năm</div>
+        <div style="font-size:32px;font-weight:800;color:var(--brand);margin:8px 0 2px;">399K</div>
+        <div style="font-size:12px;color:var(--text-2);margin-bottom:16px;">~33K/tháng — Tiết kiệm 33%</div>
+        <div style="text-align:left;font-size:12px;color:var(--text-2);margin-bottom:16px;">
+          <div style="padding:3px 0;">&#10003; Tất cả tính năng gói 6 tháng</div>
+          <div style="padding:3px 0;">&#10003; Product Sitemap</div>
+          <div style="padding:3px 0;">&#10003; Ưu tiên hỗ trợ</div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;justify-content:center;">Mua ngay</button>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:11px;color:var(--text-3);margin-top:14px;">Thanh toán PayOS (QR, chuyển khoản, ví điện tử). Nhận key trong 1 phút.</p>
+  </div>
+
+  <!-- ĐÃ KÍCH HOẠT -->
+  <div id="lic-on" style="display:none;">
+    <div style="max-width:500px;margin:0 auto;">
+      <div class="card" style="border:2px solid var(--brand);background:linear-gradient(135deg,#f0fdf4,#e8f8f2);">
+        <div class="card-body" style="padding:24px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:40px;height:40px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;">&#10003;</div>
+            <div style="flex:1;">
+              <div style="font-size:16px;font-weight:700;color:var(--brand);">Premium đã kích hoạt</div>
+              <div style="font-size:12px;color:var(--text-2);">Tất cả tính năng đã mở khóa</div>
+            </div>
+            <span class="badge badge-premium" style="font-size:13px;padding:5px 16px;">PREMIUM</span>
+          </div>
+          <code style="display:block;font-size:12px;background:rgba(0,0,0,0.05);padding:8px 12px;border-radius:var(--radius);margin-bottom:14px;word-break:break-all;">GS-EXT-A1B2-C3D4-E5F6-G7H8</code>
+          <div style="font-size:13px;">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d0e8d8;"><span style="color:var(--text-2);">Domain</span><strong>shoptech.vn</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d0e8d8;"><span style="color:var(--text-2);">Gói</span><strong>Premium 6 tháng</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d0e8d8;"><span style="color:var(--text-2);">Kích hoạt</span><strong>15/03/2026</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #d0e8d8;"><span style="color:var(--text-2);">Hết hạn</span><strong>15/09/2026 (183 ngày)</strong></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;"><span style="color:var(--text-2);">AI sinh</span><strong style="color:var(--brand);">Không giới hạn</strong></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;">Gia hạn</button>
+            <button class="btn btn-danger" style="flex:1;justify-content:center;">Hủy kích hoạt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- #main -->
+
+
+<!-- ====== ĐIỀU HƯỚNG TRANG ====== -->
+<div class="page-nav">
+  <h4>Chuyển trang</h4>
+  <button class="pn-btn active" onclick="go('dashboard')"><span class="pn-num">1</span>Tổng quan</button>
+  <button class="pn-btn" onclick="go('audit')"><span class="pn-num">2</span>Kiểm tra SEO</button>
+  <button class="pn-btn" onclick="go('bulk')"><span class="pn-num">3</span>Sửa hàng loạt</button>
+  <button class="pn-btn" onclick="go('ai-result')"><span class="pn-num">4</span>Kết quả AI</button>
+  <button class="pn-btn" onclick="go('keywords')"><span class="pn-num">5</span>Từ khóa & Liên kết</button>
+  <button class="pn-btn" onclick="go('metabox')"><span class="pn-num">6</span>Meta Box</button>
+  <button class="pn-btn" onclick="go('settings')"><span class="pn-num">7</span>Cài đặt</button>
+  <button class="pn-btn" onclick="go('license')"><span class="pn-num">8</span>Giấy phép</button>
+</div>
+
+<script>
+function go(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var el=document.getElementById('p-'+id);
+  if(el){el.classList.add('active');el.classList.add('anim-in');}
+  var map={dashboard:0,audit:1,bulk:2,'ai-result':3,keywords:4,metabox:5,settings:6,license:7};
+  var btns=document.querySelectorAll('.page-nav .pn-btn');
+  btns.forEach(function(b){b.classList.remove('active');});
+  if(btns[map[id]])btns[map[id]].classList.add('active');
+  document.querySelectorAll('#sidebar li').forEach(function(l){l.classList.remove('active');});
+  document.querySelectorAll('#sidebar li[data-p="'+id+'"]').forEach(function(l){l.classList.add('active');});
+  window.scrollTo(0,0);
+}
+function toggleLic(){
+  var off=document.getElementById('lic-off'),on=document.getElementById('lic-on'),btn=document.getElementById('lic-toggle');
+  if(off.style.display!=='none'){off.style.display='none';on.style.display='block';btn.textContent='Xem trạng thái: Chưa kích hoạt';}
+  else{off.style.display='block';on.style.display='none';btn.textContent='Xem trạng thái: Đã kích hoạt';}
+}
+</script>
+
+</body>
+</html>

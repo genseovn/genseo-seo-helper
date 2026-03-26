@@ -148,8 +148,10 @@ class GenSeo_MCP_Abilities {
         self::register_get_orphan_pages();
         self::register_validate_schema();
         self::register_get_anchor_diversity();
+        // P3: Cache Management
+        self::register_purge_post_cache();
 
-        $count = 36 + 7; // base + always-on new abilities
+        $count = 36 + 7 + 1; // base + always-on new abilities + cache purge
         if (class_exists('WooCommerce')) $count += 3;
         if (defined('ICL_SITEPRESS_VERSION') || function_exists('pll_languages_list')) $count += 2;
 
@@ -5597,5 +5599,114 @@ class GenSeo_MCP_Abilities {
             'anchors'          => $anchors_list,
             'over_optimized'   => $over_optimized,
         );
+    }
+
+    // ============================================================
+    // CACHE MANAGEMENT
+    // ============================================================
+
+    /**
+     * genseo/purge-post-cache — Xóa cache cho bài viết cụ thể
+     * Hỗ trợ page cache plugins phổ biến: WP Super Cache, W3 Total Cache,
+     * LiteSpeed Cache, WP Fastest Cache, WP Rocket, và WordPress core.
+     */
+    private static function register_purge_post_cache() {
+        wp_register_ability('genseo/purge-post-cache', array(
+            'label'       => 'Xóa cache bài viết',
+            'description' => 'Xóa page cache cho bài viết cụ thể sau khi cập nhật SEO meta. Hỗ trợ WP Super Cache, W3TC, LiteSpeed, WP Fastest Cache, WP Rocket.',
+            'category'    => 'genseo',
+            'input_schema' => array(
+                'type'       => 'object',
+                'properties' => array(
+                    'post_id' => array('type' => 'integer', 'description' => 'ID bài viết cần xóa cache'),
+                ),
+                'required' => array('post_id'),
+            ),
+            'meta' => array(
+                'mcp' => array('public' => true),
+                'annotations' => array('readOnlyHint' => false),
+            ),
+            'execute_callback'   => array(__CLASS__, 'handle_purge_post_cache'),
+            'permission_callback' => array(__CLASS__, 'check_edit_permission'),
+        ));
+    }
+
+    /**
+     * Handler: Xóa cache cho 1 bài viết
+     * Detect và gọi API purge của từng cache plugin đang active.
+     */
+    public static function handle_purge_post_cache($params) {
+        $post_id = self::validate_post_id($params);
+        if (is_wp_error($post_id)) {
+            return $post_id;
+        }
+
+        $plugins_cleared = array();
+
+        // WordPress core — luôn gọi
+        clean_post_cache($post_id);
+        $plugins_cleared[] = 'wordpress_core';
+
+        // WP Super Cache
+        if (function_exists('wp_cache_post_change')) {
+            wp_cache_post_change($post_id);
+            $plugins_cleared[] = 'wp_super_cache';
+        }
+
+        // W3 Total Cache
+        if (function_exists('w3tc_flush_post')) {
+            w3tc_flush_post($post_id);
+            $plugins_cleared[] = 'w3_total_cache';
+        }
+
+        // LiteSpeed Cache
+        if (has_action('litespeed_purge_post')) {
+            do_action('litespeed_purge_post', $post_id);
+            $plugins_cleared[] = 'litespeed_cache';
+        }
+
+        // WP Fastest Cache
+        if (has_action('wpfc_clear_post_cache_by_id')) {
+            do_action('wpfc_clear_post_cache_by_id', $post_id);
+            $plugins_cleared[] = 'wp_fastest_cache';
+        }
+
+        // WP Rocket
+        if (function_exists('rocket_clean_post')) {
+            rocket_clean_post($post_id);
+            $plugins_cleared[] = 'wp_rocket';
+        }
+
+        // Autoptimize
+        if (class_exists('autoptimizeCache')) {
+            autoptimizeCache::clearall();
+            $plugins_cleared[] = 'autoptimize';
+        }
+
+        // Hummingbird
+        if (has_action('wphb_clear_page_cache')) {
+            do_action('wphb_clear_page_cache', $post_id);
+            $plugins_cleared[] = 'hummingbird';
+        }
+
+        // SG Optimizer (SiteGround)
+        if (function_exists('sg_cachepress_purge_cache')) {
+            sg_cachepress_purge_cache(get_permalink($post_id));
+            $plugins_cleared[] = 'sg_optimizer';
+        }
+
+        // Object cache flush cho post
+        wp_cache_delete($post_id, 'posts');
+        wp_cache_delete($post_id, 'post_meta');
+
+        $result = array(
+            'success'         => true,
+            'post_id'         => $post_id,
+            'plugins_cleared' => $plugins_cleared,
+        );
+
+        do_action('genseo_mcp_ability_executed', 'genseo/purge-post-cache', $params, $result, true);
+
+        return $result;
     }
 }

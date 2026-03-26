@@ -139,6 +139,16 @@ class GenSeo_RankMath {
             update_post_meta($post_id, 'rank_math_focus_keyword', $all_keywords);
         }
 
+        // Twitter Card: dùng chung data với Facebook OG
+        update_post_meta($post_id, 'rank_math_twitter_use_facebook', 'on');
+        update_post_meta($post_id, 'rank_math_twitter_card_type', 'summary_large_image');
+
+        // Pillar content flag cho bài dài (>1500 từ)
+        $word_count = get_post_meta($post_id, '_genseo_word_count', true);
+        if (!empty($word_count) && intval($word_count) >= 1500) {
+            update_post_meta($post_id, 'rank_math_pillar_content', 'on');
+        }
+
         // Log sync
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log(sprintf(

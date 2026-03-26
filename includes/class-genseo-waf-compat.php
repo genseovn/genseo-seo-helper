@@ -183,9 +183,17 @@ class GenSeo_WAF_Compat {
         // Lấy Authorization header từ client (Desktop app gửi Basic Auth)
         $auth_header = self::get_authorization_header();
 
-        // Đọc body trước để kiểm tra API Key
-        $raw_body = file_get_contents('php://input');
-        $request_data = $raw_body ? json_decode($raw_body, true) : null;
+        // Đọc body: hỗ trợ json_payload form field (WAF-safe) + raw JSON fallback
+        $raw_body = null;
+        $request_data = null;
+        if (!empty($_POST['json_payload'])) {
+            $raw_body = wp_unslash($_POST['json_payload']);
+            $request_data = json_decode($raw_body, true);
+        }
+        if (!is_array($request_data)) {
+            $raw_body = file_get_contents('php://input');
+            $request_data = $raw_body ? json_decode($raw_body, true) : null;
+        }
 
         // Kiểm tra quyền: 3 cách xác thực
         // 1. Cookie auth (logged-in user)
@@ -215,7 +223,7 @@ class GenSeo_WAF_Compat {
         }
 
         // Body đã đọc ở trên
-        if (empty($raw_body)) {
+        if (empty($raw_body) && empty($request_data)) {
             wp_send_json(array(
                 'jsonrpc' => '2.0',
                 'id'      => null,
@@ -264,6 +272,35 @@ class GenSeo_WAF_Compat {
             $internal_request->set_body($forward_body);
 
             $rest_response = rest_do_request($internal_request);
+
+            // Nếu route không tồn tại (rest_no_route), bọc thêm diagnostic context
+            $status_code = $rest_response->get_status();
+            if ($status_code === 404) {
+                $resp_data_check = $rest_response->get_data();
+                $is_no_route = is_array($resp_data_check)
+                    && isset($resp_data_check['code'])
+                    && $resp_data_check['code'] === 'rest_no_route';
+
+                if ($is_no_route) {
+                    $diag = function_exists('genseo_get_mcp_diagnostic')
+                        ? genseo_get_mcp_diagnostic()
+                        : array();
+
+                    wp_send_json(array(
+                        'jsonrpc' => '2.0',
+                        'id'      => isset($request_data['id']) ? $request_data['id'] : null,
+                        'error'   => array(
+                            'code'    => -32601,
+                            'message' => 'MCP route chưa được đăng ký trên WordPress. Hãy kiểm tra plugin GenSeo SEO Helper.',
+                            'data'    => array(
+                                'wp_error_code'  => 'rest_no_route',
+                                'mcp_diagnostic' => $diag,
+                            ),
+                        ),
+                    ), 404);
+                    return;
+                }
+            }
 
             // rest_do_request() goi dispatch() nhung KHONG fire filter 'rest_post_dispatch'
             // MCP Adapter dung filter nay de set header Mcp-Session-Id vao response

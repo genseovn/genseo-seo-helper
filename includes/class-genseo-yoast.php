@@ -130,6 +130,23 @@ class GenSeo_Yoast {
             update_post_meta($post_id, '_yoast_wpseo_twitter-image', $og_image);
         }
 
+        // Twitter title & description (Yoast shows these in its analysis)
+        $seo_title = get_post_meta($post_id, '_genseo_seo_title', true);
+        if (!empty($seo_title)) {
+            update_post_meta($post_id, '_yoast_wpseo_twitter-title', $seo_title);
+        }
+        $meta_desc = get_post_meta($post_id, '_genseo_meta_desc', true);
+        if (!empty($meta_desc)) {
+            update_post_meta($post_id, '_yoast_wpseo_twitter-description', $meta_desc);
+        }
+
+        // Estimated reading time (Yoast uses this for schema & analysis)
+        $word_count = get_post_meta($post_id, '_genseo_word_count', true);
+        if (!empty($word_count) && intval($word_count) > 0) {
+            $reading_time = max(1, round(intval($word_count) / 200));
+            update_post_meta($post_id, '_yoast_wpseo_estimated-reading-time-minutes', $reading_time);
+        }
+
         // Log sync
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log(sprintf(

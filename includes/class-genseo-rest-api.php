@@ -227,6 +227,9 @@ class GenSeo_REST_API {
                     'rankmath_sync'  => genseo_get_setting('enable_rankmath_sync', true),
                     'yoast_sync'     => genseo_get_setting('enable_yoast_sync', true),
                 ),
+                'mcp_diagnostic'    => function_exists('genseo_get_mcp_diagnostic')
+                    ? genseo_get_mcp_diagnostic()
+                    : null,
             ),
         );
 

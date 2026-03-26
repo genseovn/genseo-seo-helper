@@ -18,8 +18,12 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
  * vì user có thể muốn giữ lại data SEO
  */
 
-// Xóa plugin options
+// Xóa plugin options (settings chung)
 delete_option('genseo_settings');
+
+// GIỮ LẠI genseo_api_key và genseo_api_key_user_id
+// để khi cài lại plugin, các kết nối desktop app không bị mất
+// Admin có thể tự xóa thủ công: wp option delete genseo_api_key genseo_api_key_user_id
 
 // Xóa transients nếu có
 delete_transient('genseo_cache');
