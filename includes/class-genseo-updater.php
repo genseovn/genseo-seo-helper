@@ -219,6 +219,7 @@ class GenSeo_Updater {
     public static function clear_cache($upgrader, $options) {
         if ($options['action'] === 'update' && $options['type'] === 'plugin') {
             delete_transient(self::CACHE_KEY);
+            delete_site_transient('update_plugins');
         }
     }
 

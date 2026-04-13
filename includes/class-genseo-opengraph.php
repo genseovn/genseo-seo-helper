@@ -29,6 +29,17 @@ class GenSeo_OpenGraph {
      * Output OpenGraph meta tags
      */
     public static function output() {
+        try {
+            self::do_output();
+        } catch (\Throwable $e) {
+            error_log('[GenSeo] OpenGraph output error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Internal output (wrapped by try/catch in output())
+     */
+    private static function do_output() {
         // Chỉ output cho singular posts
         if (!is_singular('post')) {
             return;

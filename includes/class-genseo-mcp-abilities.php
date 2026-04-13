@@ -1116,6 +1116,7 @@ class GenSeo_MCP_Abilities {
             'meta_description' => get_post_meta($post_id, '_genseo_meta_desc', true),
             'focus_keyword'    => get_post_meta($post_id, '_genseo_focus_keyword', true),
             'schema_type'      => get_post_meta($post_id, '_genseo_schema_type', true),
+            'schema_json'      => get_post_meta($post_id, '_genseo_schema_json', true),
             'canonical_url'    => get_post_meta($post_id, '_genseo_canonical_url', true),
             'robots'           => get_post_meta($post_id, '_genseo_robots', true),
             'og_image'         => get_post_meta($post_id, '_genseo_og_image', true),
@@ -1285,7 +1286,7 @@ class GenSeo_MCP_Abilities {
         $post_types = self::parse_post_type_param($params);
 
         // Giới hạn tối đa
-        $limit = min($limit, 200);
+        $limit = min($limit, 500);
 
         // Query bài publish thiếu SEO meta
         // Dùng meta_query với OR: thiếu seo_title HOẶC meta_desc HOẶC focus_keyword
@@ -1769,6 +1770,22 @@ class GenSeo_MCP_Abilities {
             $update_data['post_title'] = sanitize_text_field($params['title']);
         }
         if (isset($params['content'])) {
+            // Safety guard: Gutenberg block integrity
+            // Nếu content hiện tại dùng Gutenberg blocks nhưng content mới không có → reject
+            $current_post = get_post($post_id);
+            $current_content = $current_post ? $current_post->post_content : '';
+            $current_has_gutenberg = preg_match('/<!--\s*wp:/', $current_content);
+            $new_has_gutenberg = preg_match('/<!--\s*wp:/', $params['content']);
+
+            if ($current_has_gutenberg && !$new_has_gutenberg && strlen($current_content) > 200) {
+                return new WP_Error(
+                    'gutenberg_block_integrity',
+                    'Content hiện tại dùng WordPress Gutenberg blocks nhưng content mới không chứa block markers. ' .
+                    'Ghi đè sẽ phá hỏng cấu trúc Gutenberg. Hủy cập nhật để bảo vệ nội dung.',
+                    array('status' => 422)
+                );
+            }
+
             $update_data['post_content'] = wp_kses_post($params['content']);
         }
         if (isset($params['excerpt'])) {
@@ -2345,11 +2362,32 @@ class GenSeo_MCP_Abilities {
 
         foreach ($posts as $post) {
             $permalink = get_permalink($post);
+
+            // A4: Lấy focus keyword từ SEO plugins (Yoast, RankMath, GenSeo)
+            $focus_keyword = '';
+            $yoast_kw = get_post_meta($post->ID, '_yoast_wpseo_focuskw', true);
+            if (!empty($yoast_kw)) {
+                $focus_keyword = $yoast_kw;
+            } else {
+                $rm_kw = get_post_meta($post->ID, 'rank_math_focus_keyword', true);
+                if (!empty($rm_kw)) {
+                    // RankMath stores comma-separated, take first
+                    $parts = explode(',', $rm_kw);
+                    $focus_keyword = trim($parts[0]);
+                } else {
+                    $gs_kw = get_post_meta($post->ID, '_genseo_focus_keyword', true);
+                    if (!empty($gs_kw)) {
+                        $focus_keyword = $gs_kw;
+                    }
+                }
+            }
+
             $nodes[] = array(
-                'post_id'   => $post->ID,
-                'url'       => str_replace($site_url, '', $permalink),
-                'title'     => $post->post_title,
-                'post_type' => $post->post_type,
+                'post_id'       => $post->ID,
+                'url'           => str_replace($site_url, '', $permalink),
+                'title'         => $post->post_title,
+                'post_type'     => $post->post_type,
+                'focus_keyword' => $focus_keyword,
             );
 
             // Parse links
@@ -3877,9 +3915,14 @@ class GenSeo_MCP_Abilities {
         }
 
         // Schema JSON (RankMath schema Article)
+        // RankMath mong đợi PHP array (WordPress sẽ serialize), KHÔNG phải JSON string.
+        // Nếu ghi JSON string trực tiếp, RankMath sẽ crash khi đọc vì cố truy cập $schema['@type'] trên string.
         $schema_json = get_post_meta($post_id, '_genseo_schema_json', true);
         if (!empty($schema_json)) {
-            update_post_meta($post_id, 'rank_math_schema_Article', $schema_json);
+            $schema_array = json_decode($schema_json, true);
+            if (is_array($schema_array) && !empty($schema_array['@type'])) {
+                update_post_meta($post_id, 'rank_math_schema_Article', $schema_array);
+            }
         }
 
         // Robots meta

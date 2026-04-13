@@ -3,7 +3,7 @@
  * Plugin Name: GenSeo SEO Helper
  * Plugin URI: https://genseo.app
  * Description: Tối ưu SEO cho bài viết từ GenSeo Desktop - OpenGraph, Schema markup, RankMath/Yoast sync, MCP Abilities
- * Version: 2.2.0
+ * Version: 2.3.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: GenSeo Team
@@ -51,7 +51,7 @@ if (version_compare(get_bloginfo('version'), '6.0', '<')) {
 // CONSTANTS
 // ============================================================
 
-define('GENSEO_VERSION', '2.2.0');
+define('GENSEO_VERSION', '2.3.1');
 define('GENSEO_PLUGIN_FILE', __FILE__);
 define('GENSEO_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('GENSEO_PLUGIN_URL', plugin_dir_url(__FILE__));

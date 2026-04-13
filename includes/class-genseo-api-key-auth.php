@@ -375,6 +375,26 @@ class GenSeo_API_Key_Auth {
                 self::handle_get_media($data);
                 break;
 
+            case 'update_media_meta':
+                self::handle_update_media_meta($data);
+                break;
+
+            case 'apply_rewrite':
+                self::handle_apply_rewrite($data);
+                break;
+
+            case 'revert_rewrite':
+                self::handle_revert_rewrite($data);
+                break;
+
+            case 'get_rewrite_candidates':
+                self::handle_get_rewrite_candidates($data);
+                break;
+
+            case 'get_post_content':
+                self::handle_get_post_content($data);
+                break;
+
             default:
                 wp_send_json(array(
                     'success' => false,
@@ -490,6 +510,23 @@ class GenSeo_API_Key_Auth {
             $post_data['post_title'] = sanitize_text_field($data['title']);
         }
         if (isset($data['content'])) {
+            // Safety guard: Gutenberg block integrity
+            $current_post = get_post($post_id);
+            $current_content = $current_post ? $current_post->post_content : '';
+            $current_has_gutenberg = preg_match('/<!--\s*wp:/', $current_content);
+            $new_has_gutenberg = preg_match('/<!--\s*wp:/', $data['content']);
+
+            if ($current_has_gutenberg && !$new_has_gutenberg && strlen($current_content) > 200) {
+                wp_send_json(array(
+                    'success' => false,
+                    'data' => array(
+                        'message' => 'Content hiện tại dùng Gutenberg blocks nhưng content mới không chứa block markers. Hủy cập nhật để bảo vệ nội dung.',
+                        'code' => 'gutenberg_block_integrity',
+                    ),
+                ), 422);
+                return;
+            }
+
             $post_data['post_content'] = wp_kses_post($data['content']);
         }
         if (isset($data['status'])) {
@@ -924,13 +961,227 @@ class GenSeo_API_Key_Auth {
             return;
         }
 
+        $metadata = wp_get_attachment_metadata($post->ID);
+
         wp_send_json(array(
             'success' => true,
             'data'    => array(
-                'id'         => $post->ID,
-                'source_url' => wp_get_attachment_url($post->ID),
-                'title'      => $post->post_title,
-                'mime_type'  => $post->post_mime_type,
+                'id'            => $post->ID,
+                'source_url'    => wp_get_attachment_url($post->ID),
+                'title'         => $post->post_title,
+                'mime_type'     => $post->post_mime_type,
+                'media_details' => array(
+                    'width'    => isset($metadata['width']) ? (int) $metadata['width'] : 0,
+                    'height'   => isset($metadata['height']) ? (int) $metadata['height'] : 0,
+                    'filesize' => isset($metadata['filesize']) ? (int) $metadata['filesize'] : 0,
+                ),
+            ),
+        ));
+    }
+
+    /**
+     * Cập nhật alt_text và title cho media attachment
+     */
+    private static function handle_update_media_meta($data) {
+        $id = absint($data['id'] ?? 0);
+        if (!$id) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Thiếu media ID.')), 400);
+            return;
+        }
+
+        $post = get_post($id);
+        if (!$post || $post->post_type !== 'attachment') {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Không tìm thấy media.')), 404);
+            return;
+        }
+
+        $updated = false;
+
+        if (!empty($data['alt_text'])) {
+            $alt = sanitize_text_field($data['alt_text']);
+            update_post_meta($id, '_wp_attachment_image_alt', $alt);
+            $updated = true;
+        }
+
+        if (!empty($data['title'])) {
+            $title = sanitize_text_field($data['title']);
+            wp_update_post(array('ID' => $id, 'post_title' => $title));
+            $updated = true;
+        }
+
+        wp_send_json(array(
+            'success' => true,
+            'data'    => array(
+                'id'      => $id,
+                'updated' => $updated,
+            ),
+        ));
+    }
+
+    // ============================================================
+    // REWRITER ACTION HANDLERS
+    // ============================================================
+
+    /**
+     * Áp dụng viết lại bài viết (proxy tới GenSeo_REST_API::apply_rewrite)
+     */
+    private static function handle_apply_rewrite($data) {
+        $post_id = absint($data['id'] ?? 0);
+        if (!$post_id) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Thiếu post ID.')), 400);
+            return;
+        }
+
+        if (!current_user_can('edit_post', $post_id)) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Không có quyền sửa bài viết này.')), 403);
+            return;
+        }
+
+        // Tạo WP_REST_Request giả để tái sử dụng logic apply_rewrite có sẵn
+        $request = new WP_REST_Request('POST', '/genseo/v1/posts/' . $post_id . '/rewrite');
+        $request->set_param('id', $post_id);
+        $request->set_body(wp_json_encode($data));
+        $request->set_header('Content-Type', 'application/json');
+
+        $response = GenSeo_REST_API::apply_rewrite($request);
+
+        if (is_wp_error($response)) {
+            $status = $response->get_error_data()['status'] ?? 500;
+            wp_send_json(array(
+                'success' => false,
+                'data'    => array('message' => $response->get_error_message()),
+            ), $status);
+            return;
+        }
+
+        // REST response → array
+        $response_data = $response->get_data();
+        wp_send_json($response_data);
+    }
+
+    /**
+     * Hoàn tác viết lại bài viết (proxy tới GenSeo_REST_API::revert_rewrite)
+     */
+    private static function handle_revert_rewrite($data) {
+        $post_id = absint($data['id'] ?? 0);
+        if (!$post_id) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Thiếu post ID.')), 400);
+            return;
+        }
+
+        if (!current_user_can('edit_post', $post_id)) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Không có quyền sửa bài viết này.')), 403);
+            return;
+        }
+
+        $request = new WP_REST_Request('POST', '/genseo/v1/posts/' . $post_id . '/rewrite/revert');
+        $request->set_param('id', $post_id);
+
+        $response = GenSeo_REST_API::revert_rewrite($request);
+
+        if (is_wp_error($response)) {
+            $status = $response->get_error_data()['status'] ?? 500;
+            wp_send_json(array(
+                'success' => false,
+                'data'    => array('message' => $response->get_error_message()),
+            ), $status);
+            return;
+        }
+
+        $response_data = $response->get_data();
+        wp_send_json($response_data);
+    }
+
+    /**
+     * Lấy danh sách bài viết cần viết lại (proxy tới GenSeo_REST_API::get_rewrite_candidates)
+     */
+    private static function handle_get_rewrite_candidates($data) {
+        $request = new WP_REST_Request('GET', '/genseo/v1/posts/rewrite-candidates');
+
+        // Map các filter params
+        $params = array(
+            'per_page', 'page', 'status', 'search', 'category',
+            'date_after', 'date_before', 'min_age_days',
+            'exclude_recently_rewritten', 'orderby', 'order',
+        );
+        foreach ($params as $param) {
+            if (isset($data[$param])) {
+                $request->set_param($param, $data[$param]);
+            }
+        }
+
+        // Defaults (giống REST API registration)
+        if (!$request->get_param('per_page')) $request->set_param('per_page', 50);
+        if (!$request->get_param('page')) $request->set_param('page', 1);
+        if (!$request->get_param('status')) $request->set_param('status', 'publish');
+        if (!$request->get_param('orderby')) $request->set_param('orderby', 'modified');
+        if (!$request->get_param('order')) $request->set_param('order', 'asc');
+
+        $response = GenSeo_REST_API::get_rewrite_candidates($request);
+
+        if (is_wp_error($response)) {
+            $status = $response->get_error_data()['status'] ?? 500;
+            wp_send_json(array(
+                'success' => false,
+                'data'    => array('message' => $response->get_error_message()),
+            ), $status);
+            return;
+        }
+
+        $response_data = $response->get_data();
+        wp_send_json($response_data);
+    }
+
+    /**
+     * Lấy nội dung bài viết + SEO meta
+     */
+    private static function handle_get_post_content($data) {
+        $post_id = absint($data['id'] ?? 0);
+        if (!$post_id) {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Thiếu post ID.')), 400);
+            return;
+        }
+
+        $post = get_post($post_id);
+        if (!$post || $post->post_type !== 'post') {
+            wp_send_json(array('success' => false, 'data' => array('message' => 'Không tìm thấy bài viết.')), 404);
+            return;
+        }
+
+        // SEO meta
+        $seo_meta = array();
+        $seo_meta['genseo_meta_desc'] = get_post_meta($post_id, '_genseo_meta_desc', true);
+        $seo_meta['genseo_seo_title'] = get_post_meta($post_id, '_genseo_seo_title', true);
+        $seo_meta['genseo_focus_keyword'] = get_post_meta($post_id, '_genseo_focus_keyword', true);
+
+        $seo_plugin = genseo_detect_seo_plugin();
+        if ($seo_plugin['detected']) {
+            if ($seo_plugin['type'] === 'rankmath') {
+                $seo_meta['rank_math_title'] = get_post_meta($post_id, 'rank_math_title', true);
+                $seo_meta['rank_math_description'] = get_post_meta($post_id, 'rank_math_description', true);
+                $seo_meta['rank_math_focus_keyword'] = get_post_meta($post_id, 'rank_math_focus_keyword', true);
+            } elseif ($seo_plugin['type'] === 'yoast') {
+                $seo_meta['yoast_title'] = get_post_meta($post_id, '_yoast_wpseo_title', true);
+                $seo_meta['yoast_metadesc'] = get_post_meta($post_id, '_yoast_wpseo_metadesc', true);
+                $seo_meta['yoast_focuskw'] = get_post_meta($post_id, '_yoast_wpseo_focuskw', true);
+            }
+        }
+
+        wp_send_json(array(
+            'success' => true,
+            'data'    => array(
+                'id'            => $post_id,
+                'title'         => array('rendered' => $post->post_title),
+                'content'       => array('rendered' => $post->post_content),
+                'excerpt'       => array('rendered' => $post->post_excerpt),
+                'slug'          => $post->post_slug ?? $post->post_name,
+                'link'          => get_permalink($post_id),
+                'status'        => $post->post_status,
+                'date'          => $post->post_date,
+                'modified'      => $post->post_modified,
+                'seo_meta'      => $seo_meta,
+                'seo_plugin'    => $seo_plugin,
+                'featured_image' => get_the_post_thumbnail_url($post_id, 'full'),
             ),
         ));
     }

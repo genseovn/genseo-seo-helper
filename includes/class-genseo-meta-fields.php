@@ -138,6 +138,32 @@ class GenSeo_Meta_Fields {
             'default'     => '',
             'sanitize'    => 'sanitize_text_field',
         ),
+
+        // Rewrite tracking
+        '_genseo_rewritten_at' => array(
+            'type'        => 'string',
+            'description' => 'Timestamp bài được viết lại lần cuối',
+            'default'     => '',
+            'sanitize'    => 'sanitize_text_field',
+        ),
+        '_genseo_rewrite_version' => array(
+            'type'        => 'integer',
+            'description' => 'Số lần bài đã được viết lại',
+            'default'     => 0,
+            'sanitize'    => 'absint',
+        ),
+        '_genseo_rewrite_source' => array(
+            'type'        => 'string',
+            'description' => 'Nguồn viết lại: genseo-rewriter',
+            'default'     => '',
+            'sanitize'    => 'sanitize_text_field',
+        ),
+        '_genseo_original_word_count' => array(
+            'type'        => 'integer',
+            'description' => 'Số từ bài gốc trước khi viết lại',
+            'default'     => 0,
+            'sanitize'    => 'absint',
+        ),
     );
 
     /**
